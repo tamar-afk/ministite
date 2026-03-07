@@ -229,7 +229,11 @@ function HeroDemo() {
                         { name: 'Lead generation presentation', owner: 1, timeline: 40, status: 'Stuck' },
                         { name: 'Conduct a risk assessment', owner: 2, timeline: 100, status: 'Done' },
                         { name: 'Meeting with publishers', owner: 1, timeline: 20, status: 'Working on it' },
-                      ].map((row, i) => (
+                      ].map((row, i) => {
+                        const showDone = frame === DEMO_FRAMES.DONE
+                        const statusLabel = showDone ? 'Done' : row.status
+                        const statusGreen = showDone || row.status === 'Done'
+                        return (
                         <tr key={i} className="border-b border-[var(--border-light)] hover:bg-[#fafafa]">
                           <td className="py-2 pl-2"><Star className="w-3.5 h-3.5 text-[var(--text-muted)]/60" /></td>
                           <td className="py-2 pl-2 font-normal text-[var(--text-primary)]">{row.name}</td>
@@ -248,16 +252,27 @@ function HeroDemo() {
                             </div>
                           </td>
                           <td className="py-2 pl-2">
-                            <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-normal text-white ${
-                              row.status === 'Done' ? 'bg-[#00CA72]' :
-                              row.status === 'Working on it' ? 'bg-[#F5A623]' : 'bg-[#FF5C84]'
-                            }`}>
-                              {row.status}
-                            </span>
+                            {showDone ? (
+                              <motion.span
+                                initial={{ scale: 0.6, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ delay: 0.06 * i, type: 'spring', stiffness: 380, damping: 22 }}
+                                className="hero-done-pill inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm font-semibold text-white bg-[#00CA72] shadow-[0_0_0_2px_rgba(0,202,114,0.3),0_2px_8px_rgba(0,202,114,0.35)]"
+                              >
+                                Done ✓
+                              </motion.span>
+                            ) : (
+                              <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-normal text-white ${
+                                statusGreen ? 'bg-[#00CA72]' :
+                                row.status === 'Working on it' ? 'bg-[#F5A623]' : 'bg-[#FF5C84]'
+                              }`}>
+                                {statusLabel}
+                              </span>
+                            )}
                           </td>
                           <td className="py-2 pl-2 text-[var(--text-muted)]">Sep 0{i + 3}</td>
                         </tr>
-                      ))}
+                      )})}
                     </tbody>
                   </table>
                 </div>
@@ -314,28 +329,6 @@ function HeroDemo() {
                     </motion.div>
                   ))}
                 </>
-              )}
-
-              {/* Done state: status pills cascade to Done */}
-              {frame === DEMO_FRAMES.DONE && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
-                >
-                  {[1, 2, 3].map((j) => (
-                    <motion.span
-                      key={j}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.1 * j }}
-                      className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-normal text-white bg-[#00CA72]"
-                    >
-                      Done ✓
-                    </motion.span>
-                  ))}
-                </motion.div>
               )}
 
               {showConfetti && (

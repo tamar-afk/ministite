@@ -27,6 +27,15 @@
   animation: context-flow-dash 0.5s linear infinite;
 }
 
+/* Hero demo: Done pills — soft glow pulse when they appear */
+@keyframes hero-done-glow {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(0,202,114,0.3), 0 2px 8px rgba(0,202,114,0.35); }
+  50% { box-shadow: 0 0 0 3px rgba(0,202,114,0.4), 0 2px 12px rgba(0,202,114,0.5); }
+}
+.hero-done-pill {
+  animation: hero-done-glow 2s ease-in-out infinite;
+}
+
 /* Guardrails: quiet Live dot pulse */
 @keyframes guardrails-live-pulse {
   0%, 100% { opacity: 1; }
