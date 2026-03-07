@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>monday work management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6C47FF;
+      --accent-pink: #FF5C84;
+      --accent-green: #00CA72;
+      --accent-amber: #F5A623;
+      --dark: #080812;
+      --dark-surface: #0F0F1E;
+      --dark-border: #1E1E3A;
+      --light-bg: #F7F6FF;
+      --text-primary: #0B0B1A;
+      --text-muted: #6B6B8A;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', system-ui, sans-serif;
+      color: var(--text-primary);
+      background: var(--light-bg);
+      line-height: 1.6;
+    }
+    .font-serif { font-family: 'Instrument Serif', Georgia, serif; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(255,255,255,0.9);
+      border-bottom: 1px solid var(--dark-border);
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.125rem; }
+    .logo-icon { width: 24px; height: 24px; border-radius: 4px; background: var(--primary); }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { font-size: 14px; color: var(--text-muted); }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-cta { display: flex; gap: 12px; align-items: center; }
+    .btn-ghost { padding: 8px 12px; color: var(--text-muted); font-size: 14px; }
+    .btn-primary { padding: 8px 16px; background: var(--primary); color: white; border-radius: 8px; font-size: 14px; font-weight: 500; }
+
+    /* Hero */
+    .hero { padding: 140px 24px 80px; text-align: center; }
+    .eyebrow { display: inline-block; padding: 6px 16px; border-radius: 999px; background: rgba(108,71,255,0.15); color: var(--primary); font-size: 14px; font-weight: 500; margin-bottom: 24px; }
+    .hero h1 { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 400; line-height: 1.1; margin-bottom: 24px; }
+    .hero .sub { font-size: 1.25rem; color: var(--text-muted); max-width: 560px; margin: 0 auto 40px; }
+    .hero .cta { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 60px; }
+    .btn-hero { padding: 16px 32px; border-radius: 8px; font-size: 1.125rem; font-weight: 500; }
+    .btn-hero.fill { background: var(--primary); color: white; }
+    .btn-hero.outline { color: var(--text-muted); }
+    .demo-frame { max-width: 900px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--dark-border); background: var(--dark-surface); overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+    .demo-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--dark); border-bottom: 1px solid var(--dark-border); }
+    .demo-dots { display: flex; gap: 6px; }
+    .demo-dots span { width: 12px; height: 12px; border-radius: 50%; }
+    .demo-dots .r { background: #FF5F57; }
+    .demo-dots .y { background: #FEBC2E; }
+    .demo-dots .g { background: #28C840; }
+    .demo-url { flex: 1; text-align: center; font-size: 12px; color: var(--text-muted); }
+    .demo-body { min-height: 320px; padding: 24px; background: var(--dark-surface); color: white; }
+    .marquee-wrap { overflow: hidden; margin-top: 32px; }
+    .marquee { display: flex; width: 200%; animation: marquee 30s linear infinite; }
+    .marquee:hover { animation-play-state: paused; }
+    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .marquee span { padding: 0 24px; font-size: 1.125rem; color: var(--text-muted); white-space: nowrap; }
+    .section { padding: 80px 24px; }
+    .section.dark { background: var(--dark); color: white; }
+    .section.white { background: white; }
+    .section h2 { font-family: 'Instrument Serif', Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); text-align: center; margin-bottom: 48px; }
+    .section.dark h2 { color: white; }
+    .section .muted { color: var(--text-muted); }
+    footer { background: var(--dark-surface); color: white; padding: 64px 24px 32px; }
+    footer .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 32px; margin-top: 32px; }
+    footer a { color: var(--text-muted); font-size: 14px; }
+    footer a:hover { color: white; }
+    .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--dark-border); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 14px; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo"><span class="logo-icon"></span>monday</a>
+    <div class="nav-links">
+      <a href="#">Product</a>
+      <a href="#">Solutions</a>
+      <a href="#">Pricing</a>
+      <a href="#">Enterprise</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#" class="btn-ghost">Log in</a>
+      <a href="#" class="btn-primary">Get started</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="eyebrow">monday work management</span>
+    <h1 class="font-serif">Intelligent<br>work execution.</h1>
+    <p class="sub">Finally, your output can catch up to your ambition.<br>You set the direction and your agents execute at scale, for every team and every use case — all on one work platform.</p>
+    <div class="cta">
+      <a href="#" class="btn-hero fill">Get started free</a>
+      <a href="#" class="btn-hero outline">See it in action ▶</a>
+    </div>
+    <div class="demo-frame">
+      <div class="demo-bar">
+        <div class="demo-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+        <span class="demo-url">app.monday.com</span>
+      </div>
+      <div class="demo-body">
+        <p class="muted">Create Q3 product launch campaign</p>
+        <p class="muted" style="margin-top:16px;font-size:14px">Your project board and Gantt view would appear here in the full app.</p>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:24px;font-size:14px">Already trusted by 250K+ customers worldwide</p>
+    <div class="marquee-wrap">
+      <div class="marquee">
+        <span>Uber</span><span>Coca-Cola</span><span>Canva</span><span>Hulu</span><span>Lionsgate</span><span>NBC</span><span>Universal</span><span>Unilever</span>
+        <span>Uber</span><span>Coca-Cola</span><span>Canva</span><span>Hulu</span><span>Lionsgate</span><span>NBC</span><span>Universal</span><span>Unilever</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section white">
+    <h2>Solutions for every team, at any scale</h2>
+    <p class="muted text-center" style="max-width:560px;margin:0 auto">PMO · Legal · HR · Product · Marketing · IT · Operations — each with tailored boards and workflows.</p>
+  </section>
+
+  <section class="section">
+    <h2>From intent to outcome, powered by AI</h2>
+    <p class="muted text-center" style="max-width:560px;margin:0 auto">Strategy → Resource management → Execution → Tracking → Reporting. Scroll-driven storytelling in the full app.</p>
+  </section>
+
+  <section class="section white">
+    <h2>You set the guardrails.</h2>
+    <p class="muted text-center" style="margin-bottom:48px">So you never lose control.</p>
+    <p class="muted text-center" style="max-width:560px;margin:0 auto">Security · Transparency · Accountability · Control. Interactive AI governance panel in the full app.</p>
+  </section>
+
+  <section class="section dark">
+    <h2>Why monday work management</h2>
+    <p class="muted text-center" style="max-width:560px;margin:0 auto">94% adoption · 250K+ customers · SOC2 · ISO27001 · One unified intelligence layer.</p>
+  </section>
+
+  <section class="section white">
+    <h2>50% faster project delivery</h2>
+    <p class="muted text-center" style="max-width:560px;margin:0 auto">Quote and awards in the full app.</p>
+  </section>
+
+  <section class="section dark">
+    <h2>Faster execution. Better decisions. Across every department.</h2>
+    <p class="muted text-center" style="margin-bottom:24px">Start today and see the difference intelligent work execution makes.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
+      <a href="#" class="btn-hero fill">Get started free</a>
+      <a href="#" class="btn-hero outline" style="border:1px solid rgba(255,255,255,0.5);color:white">Talk to sales</a>
+    </div>
+  </section>
+
+  <footer class="container">
+    <div class="logo" style="margin-bottom:8px"><span class="logo-icon"></span>monday</div>
+    <p class="muted" style="font-size:14px">The AI-powered work OS</p>
+    <div class="grid">
+      <div><strong>Product</strong><br><a href="#">Features</a><br><a href="#">Integrations</a><br><a href="#">Pricing</a></div>
+      <div><strong>Solutions</strong><br><a href="#">By team</a><br><a href="#">Enterprise</a></div>
+      <div><strong>Resources</strong><br><a href="#">Blog</a><br><a href="#">Help</a></div>
+      <div><strong>Company</strong><br><a href="#">About</a><br><a href="#">Careers</a><br><a href="#">Contact</a></div>
+    </div>
+    <div class="footer-bottom">
+      <div><a href="#">LinkedIn</a> · <a href="#">X</a> · <a href="#">YouTube</a></div>
+      <div>© 2025 monday.com · <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Security</a></div>
+    </div>
+  </footer>
+</body>
+</html>

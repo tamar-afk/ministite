@@ -1,0 +1,196 @@
+/* Knowledge section: dotted grid background (Attio-style) */
+.knowledge-diagram-bg {
+  background-color: #f5f4f8;
+  background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.06) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Context diagram: light border container + dot grid */
+.context-diagram-bg {
+  background-color: #fff;
+  background-image: radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.06) 1px, transparent 0);
+  background-size: 16px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+/* Flowing dash on connector lines — dash travels left-to-right */
+@keyframes context-flow-dash {
+  to { stroke-dashoffset: -24; }
+}
+.context-flow-line {
+  stroke-dasharray: 8 16;
+  animation: context-flow-dash 1.2s linear infinite;
+}
+.context-flow-line-fast {
+  stroke-dasharray: 8 16;
+  animation: context-flow-dash 0.5s linear infinite;
+}
+
+/* Guardrails: quiet Live dot pulse */
+@keyframes guardrails-live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.guardrails-live-dot {
+  animation: guardrails-live-pulse 2s ease-in-out infinite;
+}
+
+.guardrails-amorphic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(160deg, transparent 0%, rgba(108, 71, 255, 0.015) 40%, rgba(108, 71, 255, 0.02) 60%, transparent 100%);
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* Optional: very subtle breath — use sparingly */
+@keyframes guardrails-breathe {
+  0%, 100% { opacity: 0.97; }
+  50% { opacity: 1; }
+}
+
+.guardrails-breathe {
+  animation: guardrails-breathe 6s ease-in-out infinite;
+}
+
+/* Flowy container: soft focus */
+.guardrails-flowy {
+  backdrop-filter: blur(8px);
+}
+
+/* Design tokens */
+:root {
+  --primary: #6C47FF;
+  --accent-pink: #FF5C84;
+  --accent-green: #00CA72;
+  --accent-amber: #F5A623;
+  --dark: #080812;
+  --dark-surface: #0F0F1E;
+  --dark-border: #1E1E3A;
+  --border-light: #E5E4EB;
+  --light-bg: #F7F6FF;
+  --text-primary: #0B0B1A;
+  --text-muted: #6B6B8A;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: 200%;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-reverse {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-track-reverse {
+  display: flex;
+  width: 200%;
+  animation: marquee-reverse 28s linear infinite;
+}
+
+.marquee-track-reverse:hover {
+  animation-play-state: paused;
+}
+
+/* Float for node graph */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.float-node {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Star field for final CTA */
+@keyframes star-drift {
+  0%, 100% { opacity: 0.4; transform: translate(0, 0); }
+  50% { opacity: 0.8; transform: translate(2px, -2px); }
+}
+
+.star-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: star-drift 4s ease-in-out infinite;
+}
+
+/* Final CTA on light background: subtle primary particles */
+.final-cta-light .star-particle {
+  background: var(--primary);
+  opacity: 0.2;
+}
+
+/* Pulse for demo / risk */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(108, 71, 255, 0.4); }
+  50% { opacity: 0.9; box-shadow: 0 0 12px 4px rgba(108, 71, 255, 0.2); }
+}
+
+/* Confetti burst */
+@keyframes confetti-burst {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+/* Pulsing dash for org graph lines */
+@keyframes pulse-dash {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -9; }
+}
+
+.svg-line-pulse {
+  animation: pulse-dash 2s linear infinite;
+}
+
+/* Amorphic / organic blob shapes — more pronounced */
+.blob-card {
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+}
+.blob-card-2 {
+  border-radius: 30% 70% 50% 50% / 55% 45% 55% 45%;
+}
+.blob-card-3 {
+  border-radius: 70% 30% 40% 60% / 45% 55% 45% 55%;
+}
+.blob-card-4 {
+  border-radius: 45% 55% 55% 45% / 60% 40% 60% 40%;
+}
+.blob-panel {
+  border-radius: 55% 45% 60% 40% / 45% 55% 40% 60%;
+}
+.blob-panel-strong {
+  border-radius: 65% 35% 70% 30% / 40% 60% 35% 65%;
+}
+
+/* Live dot pulse */
+@keyframes live-dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.live-dot-pulse {
+  animation: live-dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes guardrails-glow-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+}
