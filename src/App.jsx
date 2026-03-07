@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion'
 import {
+  Award,
   CheckCircle,
   ChevronRight, Play, FileImage, Users, LayoutGrid,
   MessageSquare, Database, Calendar, FolderArchive,
@@ -110,38 +111,38 @@ function HeroDemo() {
   useEffect(() => {
     let cancelled = false
     const run = async () => {
-      await delay(1000)
+      await delay(500)
       if (cancelled) return
       setFrame(DEMO_FRAMES.TYPING)
       for (let i = 0; i <= fullPrompt.length; i++) {
-        await delay(80)
+        await delay(45)
         if (cancelled) return
         setTypedText(fullPrompt.slice(0, i))
       }
-      await delay(800)
+      await delay(350)
       if (cancelled) return
       setFrame(DEMO_FRAMES.SUBMITTED)
-      await delay(1000)
+      await delay(500)
       if (cancelled) return
       setFrame(DEMO_FRAMES.BOARD)
-      await delay(2000)
+      await delay(1100)
       if (cancelled) return
       setFrame(DEMO_FRAMES.AGENTS)
-      await delay(2000)
+      await delay(1100)
       if (cancelled) return
       setFrame(DEMO_FRAMES.DONE)
       setShowConfetti(true)
-      await delay(800)
-      if (cancelled) return
-      setShowConfetti(false)
       await delay(400)
       if (cancelled) return
+      setShowConfetti(false)
+      await delay(200)
+      if (cancelled) return
       setFrame(DEMO_FRAMES.RESET)
-      await delay(600)
+      await delay(300)
       if (cancelled) return
       setTypedText('')
       setFrame(DEMO_FRAMES.IDLE)
-      await delay(400)
+      await delay(300)
       if (cancelled) return
       run()
     }
@@ -215,9 +216,9 @@ function HeroDemo() {
                       <tr className="border-b border-[var(--border-light)] bg-[#fafafa]">
                         <th className="w-8 py-2 pl-2 font-normal text-[var(--text-muted)]"><Star className="w-3.5 h-3.5 inline" /></th>
                         <th className="py-2 pl-2 font-normal text-[var(--text-muted)]">Task name</th>
+                        <th className="w-24 py-2 pl-2 font-normal text-[var(--text-muted)]">Status</th>
                         <th className="w-20 py-2 pl-2 font-normal text-[var(--text-muted)]">Owner</th>
                         <th className="w-24 py-2 pl-2 font-normal text-[var(--text-muted)]">Timeline</th>
-                        <th className="w-24 py-2 pl-2 font-normal text-[var(--text-muted)]">Status</th>
                         <th className="w-20 py-2 pl-2 font-normal text-[var(--text-muted)]">Due date</th>
                       </tr>
                     </thead>
@@ -231,12 +232,53 @@ function HeroDemo() {
                         { name: 'Meeting with publishers', owner: 1, timeline: 20, status: 'Working on it' },
                       ].map((row, i) => {
                         const showDone = frame === DEMO_FRAMES.DONE
-                        const statusLabel = showDone ? 'Done' : row.status
-                        const statusGreen = showDone || row.status === 'Done'
+                        const showWorking = frame === DEMO_FRAMES.AGENTS
+                        const showEmpty = frame === DEMO_FRAMES.BOARD
                         return (
                         <tr key={i} className="border-b border-[var(--border-light)] hover:bg-[#fafafa]">
                           <td className="py-2 pl-2"><Star className="w-3.5 h-3.5 text-[var(--text-muted)]/60" /></td>
                           <td className="py-2 pl-2 font-normal text-[var(--text-primary)]">{row.name}</td>
+                          <td className="py-2 pl-2 align-middle">
+                            <div className="relative inline-block">
+                              {showDone && (
+                                <>
+                                  {[
+                                    { x: -14, y: -10 },
+                                    { x: 12, y: -8 },
+                                    { x: -10, y: 8 },
+                                    { x: 16, y: 6 },
+                                  ].map((pos, k) => (
+                                    <motion.span
+                                      key={k}
+                                      initial={{ scale: 0, opacity: 0 }}
+                                      animate={{ scale: 1, opacity: 0.9 }}
+                                      transition={{ delay: 0.06 * i + 0.03 * k, type: 'spring', stiffness: 400, damping: 20 }}
+                                      className="absolute pointer-events-none text-[var(--accent-green)]"
+                                      style={{ left: '50%', top: '50%', transform: `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))` }}
+                                    >
+                                      <Sparkles className="w-3.5 h-3.5" />
+                                    </motion.span>
+                                  ))}
+                                </>
+                              )}
+                              {showDone ? (
+                                <motion.span
+                                  initial={{ scale: 0.6, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  transition={{ delay: 0.06 * i, type: 'spring', stiffness: 380, damping: 22 }}
+                                  className="hero-done-pill relative z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm font-semibold text-white bg-[#00CA72] shadow-[0_0_0_2px_rgba(0,202,114,0.3),0_2px_8px_rgba(0,202,114,0.35)]"
+                                >
+                                  Done ✓
+                                </motion.span>
+                              ) : showWorking ? (
+                                <span className="inline-block px-2 py-0.5 rounded-full text-xs font-normal text-white bg-[#F5A623]">
+                                  Working on it
+                                </span>
+                              ) : (
+                                <span className="text-[var(--text-muted)]">—</span>
+                              )}
+                            </div>
+                          </td>
                           <td className="py-2 pl-2">
                             <div className="flex -space-x-1">
                               {[...Array(row.owner)].map((_, j) => (
@@ -250,25 +292,6 @@ function HeroDemo() {
                             <div className="h-1.5 w-16 rounded-full bg-[#e5e7eb] overflow-hidden">
                               <div className="h-full rounded-full bg-[#4F7CFF]" style={{ width: `${row.timeline}%` }} />
                             </div>
-                          </td>
-                          <td className="py-2 pl-2">
-                            {showDone ? (
-                              <motion.span
-                                initial={{ scale: 0.6, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ delay: 0.06 * i, type: 'spring', stiffness: 380, damping: 22 }}
-                                className="hero-done-pill inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-sm font-semibold text-white bg-[#00CA72] shadow-[0_0_0_2px_rgba(0,202,114,0.3),0_2px_8px_rgba(0,202,114,0.35)]"
-                              >
-                                Done ✓
-                              </motion.span>
-                            ) : (
-                              <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-normal text-white ${
-                                statusGreen ? 'bg-[#00CA72]' :
-                                row.status === 'Working on it' ? 'bg-[#F5A623]' : 'bg-[#FF5C84]'
-                              }`}>
-                                {statusLabel}
-                              </span>
-                            )}
                           </td>
                           <td className="py-2 pl-2 text-[var(--text-muted)]">Sep 0{i + 3}</td>
                         </tr>
@@ -427,6 +450,31 @@ function HeroSection() {
         >
           <HeroDemo />
         </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ----- Hero logo row (trusted by) -----
+const HERO_LOGOS = ['Uber', 'Netflix', 'Adobe', 'Spotify', 'Salesforce', 'Nike', 'Canva', 'Airbnb']
+
+function HeroLogoRow() {
+  return (
+    <section className="py-8 md:py-10 px-6 md:px-10 border-t border-[var(--border-light)] bg-white">
+      <div className="max-w-4xl mx-auto">
+        <p className="text-center text-xs font-normal text-[var(--text-muted)] uppercase tracking-wider mb-6">
+          Trusted by teams at
+        </p>
+        <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
+          {HERO_LOGOS.map((name) => (
+            <span
+              key={name}
+              className="text-base font-normal text-[var(--text-muted)]/70 hover:text-[var(--text-primary)] transition-colors duration-200"
+            >
+              {name}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -1136,6 +1184,24 @@ function LifecycleSection() {
           <p className="text-center text-[var(--text-muted)] text-lg md:text-xl max-w-2xl mx-auto mb-16">
             Every step of work, in one place.
           </p>
+          {/* Full-width title + description so copy spans the component */}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+              className="mb-10"
+            >
+              <h3 className="font-sans font-normal text-2xl md:text-3xl text-[var(--text-primary)] mb-2">
+                {LIFECYCLE_STEPS[currentStep].title}
+              </h3>
+              <p className="text-[var(--text-muted)] text-base md:text-lg max-w-none">
+                {LIFECYCLE_STEPS[currentStep].desc}
+              </p>
+            </motion.div>
+          </AnimatePresence>
           <div className="grid md:grid-cols-12 gap-12 items-start">
             <div className="md:col-span-4 flex flex-col">
               {/* All titles visible as you scroll — numbers + bullets aligned, active bold */}
@@ -1175,21 +1241,6 @@ function LifecycleSection() {
                   </li>
                 ))}
               </ul>
-              {/* Description for active step only */}
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={currentStep}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-                  className="mt-10 pt-6 border-t border-[var(--border-light)]"
-                >
-                  <p className="text-[var(--text-muted)] text-sm md:text-base">
-                    {LIFECYCLE_STEPS[currentStep].desc}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
             </div>
             <div className="md:col-span-8 min-h-[380px]">
               <AnimatePresence mode="wait" initial={false}>
@@ -1251,12 +1302,12 @@ function LifecycleSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="max-w-lg mx-auto"
+            className="w-full max-w-2xl mx-auto"
           >
             <h3 className="font-sans font-normal text-2xl text-[var(--text-primary)] mb-2">
               {LIFECYCLE_STEPS[currentStep].title}
             </h3>
-            <p className="text-[var(--text-muted)] text-sm mb-6">
+            <p className="text-[var(--text-muted)] text-sm mb-6 w-full">
               {LIFECYCLE_STEPS[currentStep].desc}
             </p>
             <LifecycleBoard step={LIFECYCLE_STEPS[currentStep].mockup} isVisible />
@@ -1903,21 +1954,26 @@ const EDITORIAL_ROWS = [
   },
 ]
 
+const PROOF_CARD_BASE = 'rounded-xl border border-[var(--border-light)]/80 bg-white overflow-hidden shadow-sm'
+const PROOF_HEADER = 'px-3 py-2.5 border-b border-[var(--border-light)]/60 flex items-center gap-2 text-xs text-[var(--text-muted)]'
+
 function G2Badge() {
   return (
-    <div
-      className="rounded-xl p-4 flex flex-col items-center justify-center text-center shadow-lg"
-      style={{ width: 120, minHeight: 140, backgroundColor: '#FF492C', color: 'white' }}
-    >
-      <div className="flex gap-0.5 mb-1">
-        {[1, 2, 3, 4, 5].map((i) => (
-          <Star key={i} className="w-3.5 h-3.5 fill-current" />
-        ))}
+    <div className={PROOF_CARD_BASE} style={{ width: 200, minHeight: 160 }}>
+      <div className={PROOF_HEADER}>
+        <Award className="w-3.5 h-3.5 text-[var(--primary)] shrink-0" strokeWidth={1.5} />
+        G2
       </div>
-      <span className="text-[10px] font-normal opacity-90">G2</span>
-      <span className="text-[11px] font-normal uppercase leading-tight mt-2">Highest</span>
-      <span className="text-[11px] font-normal uppercase leading-tight">Adoption</span>
-      <span className="text-[10px] mt-2 opacity-90">Winter 2025</span>
+      <div className="p-5 flex flex-col items-center justify-center text-center">
+        <div className="flex gap-0.5 mb-2.5" aria-hidden>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <Star key={i} className="w-3.5 h-3.5 text-[var(--accent-amber)]" strokeWidth={1.5} />
+          ))}
+        </div>
+        <span className="text-[11px] font-normal text-[var(--text-primary)] uppercase tracking-wide">Highest</span>
+        <span className="text-[11px] font-normal text-[var(--text-primary)] uppercase tracking-wide">Adoption</span>
+        <span className="text-[10px] text-[var(--text-muted)] mt-1.5">Winter 2025</span>
+      </div>
     </div>
   )
 }
@@ -1946,31 +2002,31 @@ function AuditTrailFeed() {
   const entries = [AUDIT_ENTRIES[index], AUDIT_ENTRIES[(index + 1) % AUDIT_ENTRIES.length], AUDIT_ENTRIES[(index + 2) % AUDIT_ENTRIES.length]]
 
   return (
-    <div ref={ref} className="rounded-lg bg-white border border-[var(--border-light)] overflow-hidden shadow-lg" style={{ width: 200, minHeight: 160 }}>
-      <div className="px-3 py-2 border-b border-[var(--border-light)] flex items-center gap-2 text-xs text-[var(--text-muted)]">
-        <Zap className="w-3.5 h-3.5 text-[var(--accent-amber)]" />
+    <div ref={ref} className={PROOF_CARD_BASE} style={{ width: 200, minHeight: 160 }}>
+      <div className={PROOF_HEADER}>
+        <Zap className="w-3.5 h-3.5 text-[var(--primary)] shrink-0" strokeWidth={1.5} />
         Activity log
       </div>
-      <div className="p-2 space-y-3">
+      <div className="p-3 space-y-3.5">
         <AnimatePresence mode="popLayout">
           {entries.map((entry, i) => (
             <motion.div
               key={`${index}-${i}-${entry.title}`}
-              initial={{ opacity: 0, y: -8 }}
+              initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
+              transition={{ duration: 0.2 }}
               className="text-left"
             >
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2.5">
                 {entry.status === 'approved' ? (
-                  <CheckCircle className="w-3.5 h-3.5 text-[var(--accent-green)] shrink-0 mt-0.5" />
+                  <CheckCircle className="w-3.5 h-3.5 text-[var(--accent-green)] shrink-0 mt-0.5" strokeWidth={1.5} />
                 ) : (
-                  <Clock className="w-3.5 h-3.5 text-[var(--accent-amber)] shrink-0 mt-0.5" />
+                  <Clock className="w-3.5 h-3.5 text-[var(--accent-amber)] shrink-0 mt-0.5" strokeWidth={1.5} />
                 )}
-                <div>
-                  <div className="text-[11px] text-[var(--text-primary)] leading-tight">{entry.title}</div>
-                  <div className="text-[10px] text-[var(--text-muted)] font-mono mt-0.5">{entry.sub}</div>
+                <div className="min-w-0">
+                  <div className="text-[11px] font-normal text-[var(--text-primary)] leading-snug">{entry.title}</div>
+                  <div className="text-[10px] text-[var(--text-muted)] mt-0.5 opacity-80">{entry.sub}</div>
                 </div>
               </div>
             </motion.div>
@@ -1981,51 +2037,36 @@ function AuditTrailFeed() {
   )
 }
 
-function MiniNodeGraph() {
+function IntelligenceLayerProof() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true })
-  const nodes = NODES
+  const items = [
+    { label: 'Company data', icon: Database },
+    { label: 'Work context', icon: LayoutDashboard },
+    { label: 'Institutional knowledge', icon: FolderArchive },
+  ]
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      initial={{ opacity: 0, y: 8 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ ...SECTION_TRANSITION, delay: 0.1 }}
-      className="rounded-xl border border-[var(--border-light)] bg-white p-2 flex items-center justify-center"
-      style={{ width: 140, height: 140 }}
+      className={PROOF_CARD_BASE}
+      style={{ width: 200, minHeight: 160 }}
     >
-      <svg viewBox="0 0 100 100" className="w-full h-full">
-        <defs>
-          <linearGradient id="mini-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="var(--primary)" stopOpacity="0.2" />
-          </linearGradient>
-        </defs>
-        {nodes.filter((n) => !n.central).map((n) => (
-          <line
-            key={`mini-line-${n.id}`}
-            x1="50"
-            y1="50"
-            x2={n.cx}
-            y2={n.cy}
-            stroke="var(--primary)"
-            strokeWidth="0.4"
-            strokeDasharray="2 1.5"
-            opacity="0.5"
-          />
+      <div className={PROOF_HEADER}>
+        <Bot className="w-3.5 h-3.5 text-[var(--primary)] shrink-0" strokeWidth={1.5} />
+        Intelligence layer
+      </div>
+      <div className="p-3.5 space-y-3">
+        {items.map(({ label, icon: Icon }) => (
+          <div key={label} className="flex items-center gap-2.5">
+            <CheckCircle className="w-3.5 h-3.5 text-[var(--accent-green)] shrink-0" strokeWidth={1.5} />
+            <span className="text-[11px] font-normal text-[var(--text-primary)] flex-1 min-w-0">{label}</span>
+            <Icon className="w-3.5 h-3.5 text-[var(--text-muted)] shrink-0" strokeWidth={1.5} />
+          </div>
         ))}
-        {nodes.map((n) => (
-          <circle
-            key={n.id}
-            cx={n.cx}
-            cy={n.cy}
-            r={n.central ? 4 : 2.5}
-            fill={n.central ? 'url(#mini-glow)' : 'var(--primary)'}
-            opacity={n.central ? 1 : 0.6}
-            className="float-node"
-          />
-        ))}
-      </svg>
+      </div>
     </motion.div>
   )
 }
@@ -2036,13 +2077,18 @@ function EditorialProof({ row, inView }) {
 
   if (row.proof === 'g2') return <G2Badge />
   if (row.proof === 'audit') return <AuditTrailFeed />
-  if (row.proof === 'nodegraph') return <MiniNodeGraph />
+  if (row.proof === 'nodegraph') return <IntelligenceLayerProof />
   if (row.proof === 'stat') {
     const display = row.stat === '250K+' ? `${count}K+` : String(count)
     return (
-      <div className="text-right">
-        <div className="text-2xl md:text-3xl font-normal text-[var(--text-primary)] leading-tight">{display}</div>
-        <div className="text-sm text-[var(--text-muted)] mt-0.5">{row.statLabel}</div>
+      <div className={`${PROOF_CARD_BASE} text-left`} style={{ width: 200, minHeight: 160 }}>
+        <div className={PROOF_HEADER}>
+          <Users className="w-3.5 h-3.5 text-[var(--primary)] shrink-0" strokeWidth={1.5} />
+          {row.statLabel}
+        </div>
+        <div className="p-5 flex flex-col justify-center">
+          <div className="text-2xl md:text-3xl font-normal text-[var(--text-primary)] leading-tight tracking-tight">{display}</div>
+        </div>
       </div>
     )
   }
@@ -2134,7 +2180,7 @@ function SocialProofSection() {
           transition={{ delay: 0.08, ...SECTION_TRANSITION }}
           className="font-sans font-normal text-2xl md:text-3xl text-[var(--text-primary)] text-center max-w-2xl mx-auto mb-8"
         >
-          Join 250,000+ teams who run work on monday
+          Join 250,000+ teams who rely on monday to reach their goals
         </motion.h2>
         <div className="marquee-track py-2 mb-6">
           {[...Array(2)].map((_, set) => (
@@ -2452,6 +2498,7 @@ export default function App() {
       <Navbar scrolled={scrolled} />
       <main>
         <HeroSection />
+        <HeroLogoRow />
         <SolutionsSection />
         <LifecycleSection />
         <GuardrailsSection />
