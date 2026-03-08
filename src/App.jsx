@@ -482,7 +482,7 @@ function HeroSection() {
           transition={{ duration: 0.5, delay: 0.25 }}
           className="text-base md:text-lg text-[var(--text-muted)] max-w-2xl mx-auto mb-8"
         >
-          You set the direction and your agents execute at scale, for every team and every use case — all on one work platform.
+          You set the direction and your agents execute at scale, for every team and every use case. All on one work platform.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1388,7 +1388,7 @@ function LifecycleSection() {
 const GUARDRAILS_PILLARS = [
   { id: 'security', title: 'Security', sub: 'Data protection and access controls, built in.' },
   { id: 'transparency', title: 'Transparency', sub: 'See exactly what AI does and why.' },
-  { id: 'accountability', title: 'Accountability', sub: 'Every action owned — by a person or an agent.' },
+  { id: 'accountability', title: 'Accountability', sub: 'Every action owned by a person or an agent.' },
   { id: 'control', title: 'Control', sub: 'Adjust, pause, or override anything. Always.' },
 ]
 
@@ -1914,11 +1914,11 @@ function VibeAppSection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-12"
         >
-          <h2 className="font-sans font-normal text-4xl md:text-5xl text-[var(--text-primary)] mb-3">
-            Build any work app in minutes
+          <h2 className="font-sans font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[var(--text-primary)] mb-3 md:whitespace-nowrap">
+            Any workflow, any view, any app. In minutes.
           </h2>
           <p className="text-[var(--text-muted)] text-lg md:text-xl max-w-2xl mx-auto mb-4">
-            Generate any view or app to fit how your teams work — on top of monday work management.
+            Generate any view or app to fit how your teams work, on top of monday work management.
           </p>
         </motion.div>
 
@@ -2007,13 +2007,13 @@ const EDITORIAL_ROWS = [
   {
     num: '03',
     title: 'Enterprise control without compromise',
-    body: 'Trusted by the world\'s most complex organizations — with the permissions, approval gates, and governance to prove it.',
+    body: 'Trusted by the world\'s most complex organizations, with the permissions, approval gates, and governance to prove it.',
     proof: 'fortune500',
   },
   {
     num: '04',
     title: 'Deep understanding of your business',
-    body: 'Unifies your data, work context, and institutional knowledge into a single intelligence layer — for people and agents.',
+    body: 'Unifies your data, work context, and institutional knowledge into a single intelligence layer for people and agents.',
     proof: 'integrations',
   },
 ]
@@ -2210,7 +2210,7 @@ function DifferentiatorsSection() {
                   Deep understanding of your business
                 </h3>
                 <p className="text-[var(--text-muted)] text-sm md:text-base mt-2 leading-relaxed">
-                  Unifies your data, work context, and institutional knowledge into a single intelligence layer — for people and agents.
+                  Unifies your data, work context, and institutional knowledge into a single intelligence layer for people and agents.
                 </p>
                 <div className="flex justify-end">
                   <Plus className="w-6 h-6 text-[var(--text-muted)]" strokeWidth={2} />
@@ -2236,7 +2236,7 @@ function DifferentiatorsSection() {
                   Enterprise control without compromise
                 </h3>
                 <p className="text-sm text-[var(--text-muted)] mt-2 leading-relaxed">
-                  Trusted by the world's most complex organizations — with the permissions, approval gates, and governance to prove it.
+                  Trusted by the world's most complex organizations, with the permissions, approval gates, and governance to prove it.
                 </p>
                 <div className="flex justify-end">
                   <Plus className="w-6 h-6 text-[var(--text-muted)]" strokeWidth={2} />
@@ -2320,7 +2320,7 @@ function DifferentiatorsSection() {
                   Recognized by industry leaders
                 </h3>
                 <p className="text-sm text-white/90 mt-2 leading-relaxed">
-                  Independent research validates significant ROI for monday.com customers — including Forrester's Total Economic Impact™ study.
+                  Independent research validates significant ROI for monday.com customers, including Forrester's Total Economic Impact™ study.
                 </p>
                 <div className="flex justify-end">
                   <Plus className="w-6 h-6 text-white/80" strokeWidth={2} />
@@ -2433,7 +2433,7 @@ function SocialProofSection() {
         >
             <span className="text-5xl font-sans text-[var(--primary)] absolute top-6 left-8">"</span>
             <p className="text-lg md:text-xl pl-8 pr-4 italic">
-              monday.com's AI helped us cut our project planning time in half. What used to take days now takes minutes — and that speed has directly translated into faster delivery for our clients.
+              monday.com's AI helped us cut our project planning time in half. What used to take days now takes minutes, and that speed has directly translated into faster delivery for our clients.
             </p>
             <p className="mt-6 font-normal pl-8">Sarah Luxemberg</p>
             <p className="text-sm text-[var(--text-muted)] pl-8">Operations Director, VML</p>
@@ -2529,7 +2529,7 @@ function EnterpriseSection() {
             Enterprise-grade security
           </h3>
           <p className="text-[var(--text-muted)] text-sm md:text-base leading-relaxed mb-4 flex-1">
-            Built-in security, data privacy, governance, and compliance — so every human and AI action is protected and auditable.
+            Built-in security, data privacy, governance, and compliance so every human and AI action is protected and auditable.
           </p>
           <a href="#" className="text-sm font-normal text-[var(--primary)] hover:underline inline-flex items-center gap-1 w-fit">
             Explore our Trust Center <ChevronRight className="w-4 h-4" />
