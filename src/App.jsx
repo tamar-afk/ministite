@@ -6,7 +6,9 @@ import {
   ChevronRight, Play, FileImage, Users, LayoutGrid,
   MessageSquare, Database, Calendar, FolderArchive,
   LayoutDashboard, AlertTriangle, TrendingUp,
-  Bot, User, Star, Clock, Zap, FileText, HelpCircle, Sparkles
+  Bot, User, Star, Clock, Zap, FileText, HelpCircle, Sparkles,
+  Plus,
+  X,
 } from 'lucide-react'
 
 // Sleek section transitions: shared ease + duration
@@ -2093,6 +2095,34 @@ function EditorialProof({ row, inView }) {
   return null
 }
 
+// Flip card: click (or hover on desktop) to show proof on back
+function FlipCard({ front, back, className = '', delay = 0, inView }) {
+  const [flipped, setFlipped] = useState(false)
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ delay, ...SECTION_TRANSITION }}
+      className={`perspective-[1000px] min-h-[200px] md:min-h-[220px] ${className}`}
+    >
+      <motion.div
+        className="relative w-full h-full min-h-[200px] md:min-h-[220px] cursor-pointer"
+        onClick={() => setFlipped((f) => !f)}
+        style={{ transformStyle: 'preserve-3d' }}
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+      >
+        <div className="absolute inset-0 rounded-2xl overflow-hidden [backface-visibility:hidden] [transform:rotateY(0deg)]">
+          {front}
+        </div>
+        <div className="absolute inset-0 rounded-2xl overflow-hidden [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          {back}
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
 function DifferentiatorsSection() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '0px 0px 80px 0px' })
@@ -2104,14 +2134,213 @@ function DifferentiatorsSection() {
           initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.06, ...SECTION_TRANSITION }}
-          className="font-sans font-normal text-4xl md:text-5xl text-[var(--text-primary)] mb-12 md:mb-14"
+          className="font-sans font-normal text-4xl md:text-5xl text-[var(--text-primary)] mb-10 md:mb-12"
         >
           Why monday work management
         </motion.h2>
-        <div className="border-t border-[var(--dark-border)]">
-          {EDITORIAL_ROWS.map((row, i) => (
-            <EditorialRow key={row.num} row={row} index={i} inView={inView} />
-          ))}
+
+        {/* Top row: 2 flip cards with proof points */}
+        <div className="grid md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+          <FlipCard
+            delay={0.1}
+            inView={inView}
+            front={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between">
+                <h3 className="font-sans font-semibold text-xl md:text-2xl text-[var(--text-primary)] pr-10">
+                  Ease of use that drives proven adoption
+                </h3>
+                <p className="text-[var(--text-muted)] text-sm md:text-base mt-2 leading-relaxed">
+                  Hyper-personalization and intuitive design drive the adoption rates that give you a complete picture of work.
+                </p>
+                <div className="flex justify-end">
+                  <Plus className="w-6 h-6 text-[var(--text-muted)]" strokeWidth={2} />
+                </div>
+              </div>
+            }
+            back={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] items-center justify-center">
+                <G2Badge />
+              </div>
+            }
+          />
+          <FlipCard
+            delay={0.14}
+            inView={inView}
+            front={
+              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between" style={{ backgroundColor: 'rgba(79, 124, 255, 0.08)' }}>
+                <h3 className="font-sans font-semibold text-xl md:text-2xl text-[var(--text-primary)] pr-10">
+                  Expertise built on real-world work
+                </h3>
+                <p className="text-[var(--text-muted)] text-sm md:text-base mt-2 leading-relaxed">
+                  AI capabilities informed by 250K+ customers across industries and the patterns of the world's most productive teams.
+                </p>
+                <div className="flex justify-end">
+                  <X className="w-6 h-6 text-[var(--text-muted)]" strokeWidth={2} />
+                </div>
+              </div>
+            }
+            back={
+              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] items-center justify-center" style={{ backgroundColor: 'rgba(79, 124, 255, 0.08)' }}>
+                <CustomerScaleStat inView={inView} />
+              </div>
+            }
+          />
+        </div>
+
+        {/* Middle: image + Deep understanding flip card (proof: integrations) */}
+        <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.18, ...SECTION_TRANSITION }}
+            className="md:col-span-2 rounded-2xl overflow-hidden aspect-[2.2/1] md:aspect-auto md:min-h-[240px] bg-[var(--dark)]"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
+              alt="Team collaborating"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+          <FlipCard
+            delay={0.2}
+            inView={inView}
+            front={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+                <h3 className="font-sans font-semibold text-xl md:text-2xl text-[var(--text-primary)] pr-10">
+                  Deep understanding of your business
+                </h3>
+                <p className="text-[var(--text-muted)] text-sm md:text-base mt-2 leading-relaxed">
+                  Unifies your data, work context, and institutional knowledge into a single intelligence layer — for people and agents.
+                </p>
+                <div className="flex justify-end">
+                  <Plus className="w-6 h-6 text-[var(--text-muted)]" strokeWidth={2} />
+                </div>
+              </div>
+            }
+            back={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] items-center justify-center">
+                <IntegrationStack />
+              </div>
+            }
+          />
+        </div>
+
+        {/* Bottom row: 4 flip cards — Enterprise, G2, Gartner, Forrester */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <FlipCard
+            delay={0.22}
+            inView={inView}
+            front={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+                <h3 className="font-sans font-semibold text-lg text-[var(--text-primary)]">
+                  Enterprise control without compromise
+                </h3>
+                <p className="text-sm text-[var(--text-muted)] mt-2 leading-relaxed">
+                  Trusted by the world's most complex organizations — with the permissions, approval gates, and governance to prove it.
+                </p>
+                <div className="flex justify-end">
+                  <Plus className="w-6 h-6 text-[var(--text-muted)]" strokeWidth={2} />
+                </div>
+              </div>
+            }
+            back={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] items-center justify-center">
+                <Fortune500Stat inView={inView} />
+              </div>
+            }
+          />
+          <FlipCard
+            delay={0.26}
+            inView={inView}
+            front={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+                <h3 className="font-sans font-semibold text-lg text-[var(--text-primary)]">
+                  Most popular work management software on G2
+                </h3>
+                <p className="text-sm text-[var(--text-muted)] mt-2 leading-relaxed">
+                  Backed by 14K+ customer reviews. Rated by real users as the leader in work management.
+                </p>
+                <div className="flex justify-end">
+                  <Plus className="w-6 h-6 text-[var(--text-muted)]" strokeWidth={2} />
+                </div>
+              </div>
+            }
+            back={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-center">
+                <div className="rounded-xl flex flex-col items-center justify-center text-center py-4 px-3 mb-3" style={{ backgroundColor: '#FF492C', color: 'white', minHeight: 100 }}>
+                  <span className="text-[10px] font-semibold uppercase tracking-wider opacity-90">Leader</span>
+                  <span className="text-xs mt-1 font-medium">WINTER 2026</span>
+                  <div className="flex gap-0.5 mt-2">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <Star key={i} className="w-4 h-4 fill-current" strokeWidth={1.5} />
+                    ))}
+                  </div>
+                  <span className="text-xs mt-1">4.7/5</span>
+                </div>
+                <p className="text-sm text-[var(--text-muted)] text-center">Based on 14K+ customer reviews</p>
+              </div>
+            }
+          />
+          <FlipCard
+            delay={0.28}
+            inView={inView}
+            front={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+                <h3 className="font-sans font-semibold text-lg text-[var(--text-primary)]">
+                  Leader in Gartner Magic Quadrant
+                </h3>
+                <p className="text-sm text-[var(--text-muted)] mt-2 leading-relaxed">
+                  The only Leader in 3 Work Management Gartner® Magic Quadrant™ reports.
+                </p>
+                <div className="flex justify-end">
+                  <Plus className="w-6 h-6 text-[var(--text-muted)]" strokeWidth={2} />
+                </div>
+              </div>
+            }
+            back={
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+                <p className="font-sans font-normal text-lg text-[var(--text-primary)] mb-2">The only Leader in</p>
+                <p className="text-4xl md:text-5xl font-normal text-[var(--text-primary)] mb-1">3</p>
+                <p className="text-sm text-[var(--text-muted)] mb-4">Work Management Gartner® Magic Quadrant™ reports.</p>
+                <a href="#" className="text-sm font-normal text-[var(--primary)] hover:underline inline-flex items-center gap-1 mt-auto" onClick={(e) => e.stopPropagation()}>
+                  Learn more <ChevronRight className="w-4 h-4" />
+                </a>
+                <div className="mt-4 pt-4 border-t border-[var(--border-light)]">
+                  <span className="text-lg font-normal text-[var(--text-primary)] tracking-tight">Gartner</span>
+                </div>
+              </div>
+            }
+          />
+          <FlipCard
+            delay={0.3}
+            inView={inView}
+            front={
+              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between" style={{ backgroundColor: 'var(--accent-green)' }}>
+                <h3 className="font-sans font-semibold text-lg text-white">
+                  Recognized by industry leaders
+                </h3>
+                <p className="text-sm text-white/90 mt-2 leading-relaxed">
+                  Independent research validates significant ROI for monday.com customers — including Forrester's Total Economic Impact™ study.
+                </p>
+                <div className="flex justify-end">
+                  <Plus className="w-6 h-6 text-white/80" strokeWidth={2} />
+                </div>
+              </div>
+            }
+            back={
+              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between" style={{ backgroundColor: 'var(--accent-green)' }}>
+                <div>
+                  <p className="text-5xl md:text-6xl font-bold text-white leading-none">346%</p>
+                  <p className="text-sm text-white/90 mt-2 leading-snug">
+                    ROI in the Total Economic Impact Study of monday.com
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-white/20">
+                  <span className="text-sm font-semibold text-white uppercase tracking-widest">Forrester</span>
+                </div>
+              </div>
+            }
+          />
         </div>
       </div>
     </section>
@@ -2290,71 +2519,32 @@ function EnterpriseSection() {
           </motion.a>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-          {/* Card 1: Enterprise-grade security */}
-          <motion.div
-            initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.12, ...SECTION_TRANSITION }}
-            className="bg-white text-[var(--text-primary)] rounded-2xl p-6 md:p-8 flex flex-col"
-          >
-            <h3 className="font-sans font-normal text-xl md:text-2xl text-[var(--text-primary)] mb-3">
-              Enterprise-grade security
-            </h3>
-            <p className="text-[var(--text-muted)] text-sm md:text-base leading-relaxed mb-4 flex-1">
-              Built-in security, data privacy, governance, and compliance — so every human and AI action is protected and auditable.
-            </p>
-            <a href="#" className="text-sm font-normal text-[var(--primary)] hover:underline inline-flex items-center gap-1 w-fit">
-              Explore our Trust Center <ChevronRight className="w-4 h-4" />
-            </a>
-            <div className="mt-6 pt-6 border-t border-[var(--border-light)] flex flex-wrap gap-4 items-center">
-              {['GDPR', 'SOC 2', 'ISO 27001', 'HIPAA'].map((badge, i) => (
-                <span
-                  key={badge}
-                  className="text-xs font-normal text-[var(--text-muted)] uppercase tracking-wider px-3 py-1.5 rounded-lg bg-[var(--light-bg)]"
-                >
-                  {badge}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Card 2: Gartner */}
-          <motion.div
-            initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.18, ...SECTION_TRANSITION }}
-            className="bg-white text-[var(--text-primary)] rounded-2xl p-6 md:p-8 flex flex-col items-center text-center"
-          >
-            <p className="font-sans font-normal text-lg text-[var(--text-primary)] mb-2">The only Leader in</p>
-            <p className="text-5xl md:text-6xl font-normal text-[var(--text-primary)] mb-1">3</p>
-            <p className="text-sm text-[var(--text-muted)] mb-4">Work Management Gartner® Magic Quadrant™ reports.</p>
-            <a href="#" className="text-sm font-normal text-[var(--primary)] hover:underline inline-flex items-center gap-1 mb-6">
-              Learn more <ChevronRight className="w-4 h-4" />
-            </a>
-            <div className="mt-auto pt-4 border-t border-[var(--border-light)] w-full flex justify-center">
-              <span className="text-lg font-normal text-[var(--text-primary)] tracking-tight">Gartner</span>
-            </div>
-          </motion.div>
-
-          {/* Card 3: Forrester */}
-          <motion.div
-            initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.24, ...SECTION_TRANSITION }}
-            className="bg-white text-[var(--text-primary)] rounded-2xl p-6 md:p-8 flex flex-col items-center text-center"
-          >
-            <p className="font-sans font-normal text-lg text-[var(--text-primary)] mb-2">Motorola achieved</p>
-            <p className="text-5xl md:text-6xl font-normal text-[var(--text-primary)] mb-1">346%</p>
-            <p className="text-sm text-[var(--text-muted)] mb-4">ROI according to Forrester's Total Economic Impact™ research.</p>
-            <a href="#" className="text-sm font-normal text-[var(--primary)] hover:underline inline-flex items-center gap-1 mb-6">
-              Learn more <ChevronRight className="w-4 h-4" />
-            </a>
-            <div className="mt-auto pt-4 border-t border-[var(--border-light)] w-full flex justify-center">
-              <span className="text-sm font-normal text-[var(--text-primary)] uppercase tracking-widest">Forrester</span>
-            </div>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.12, ...SECTION_TRANSITION }}
+          className="bg-white text-[var(--text-primary)] rounded-2xl p-6 md:p-8 flex flex-col max-w-2xl"
+        >
+          <h3 className="font-sans font-normal text-xl md:text-2xl text-[var(--text-primary)] mb-3">
+            Enterprise-grade security
+          </h3>
+          <p className="text-[var(--text-muted)] text-sm md:text-base leading-relaxed mb-4 flex-1">
+            Built-in security, data privacy, governance, and compliance — so every human and AI action is protected and auditable.
+          </p>
+          <a href="#" className="text-sm font-normal text-[var(--primary)] hover:underline inline-flex items-center gap-1 w-fit">
+            Explore our Trust Center <ChevronRight className="w-4 h-4" />
+          </a>
+          <div className="mt-6 pt-6 border-t border-[var(--border-light)] flex flex-wrap gap-4 items-center">
+            {['GDPR', 'SOC 2', 'ISO 27001', 'HIPAA'].map((badge) => (
+              <span
+                key={badge}
+                className="text-xs font-normal text-[var(--text-muted)] uppercase tracking-wider px-3 py-1.5 rounded-lg bg-[var(--light-bg)]"
+              >
+                {badge}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -24,7 +24,9 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
+Open the URL Vite prints (e.g. **http://127.0.0.1:5173**). We use `127.0.0.1` instead of `localhost` so auth extensions (e.g. Cerby) are less likely to intercept and blank the page.
+
+**If you still get "Authentication required":** In Cerby (or your identity extension), check settings for excluding domains or "development URLs" and add `127.0.0.1` or `localhost`. Or use Chrome/Safari in a private/incognito window (extensions are usually disabled there).
 
 ## Build
 
