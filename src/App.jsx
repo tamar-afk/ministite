@@ -1936,162 +1936,96 @@ const EDITORIAL_ROWS = [
     num: '02',
     title: 'Expertise from real-world work',
     body: 'AI capabilities informed by 250K+ customers across industries and the patterns of the world\'s most productive teams.',
-    proof: 'stat',
-    stat: '250K+',
-    statLabel: 'customers',
+    proof: 'customerScale',
   },
   {
     num: '03',
     title: 'Enterprise control without compromise',
-    body: 'Role-based permissions, approval gates, and audit trails cover every human and AI action — by people and agents alike. You decide what runs, when, and how.',
-    proof: 'audit',
+    body: 'Trusted by the world\'s most complex organizations — with the permissions, approval gates, and governance to prove it.',
+    proof: 'fortune500',
   },
   {
     num: '04',
     title: 'Deep understanding of your business',
     body: 'Unifies your data, work context, and institutional knowledge into a single intelligence layer — for people and agents.',
-    proof: 'nodegraph',
+    proof: 'integrations',
   },
 ]
 
-const PROOF_CARD_BASE = 'rounded-xl border border-[var(--border-light)]/80 bg-white overflow-hidden shadow-sm'
-const PROOF_HEADER = 'px-3 py-2.5 border-b border-[var(--border-light)]/60 flex items-center gap-2 text-xs text-[var(--text-muted)]'
-
+// Col 4 proof — Row 01: G2 Highest Adoption Badge (~120×140px, #FF492C)
 function G2Badge() {
   return (
-    <div className={PROOF_CARD_BASE} style={{ width: 200, minHeight: 160 }}>
-      <div className={PROOF_HEADER}>
-        <Award className="w-3.5 h-3.5 text-[var(--primary)] shrink-0" strokeWidth={1.5} />
-        G2
-      </div>
-      <div className="p-5 flex flex-col items-center justify-center text-center">
-        <div className="flex gap-0.5 mb-2.5" aria-hidden>
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Star key={i} className="w-3.5 h-3.5 text-[var(--accent-amber)]" strokeWidth={1.5} />
-          ))}
-        </div>
-        <span className="text-[11px] font-normal text-[var(--text-primary)] uppercase tracking-wide">Highest</span>
-        <span className="text-[11px] font-normal text-[var(--text-primary)] uppercase tracking-wide">Adoption</span>
-        <span className="text-[10px] text-[var(--text-muted)] mt-1.5">Winter 2025</span>
-      </div>
-    </div>
-  )
-}
-
-const AUDIT_ENTRIES = [
-  { status: 'approved', title: 'Agent updated task status', sub: 'Approved by Sarah · 2m ago' },
-  { status: 'approved', title: 'Workflow triggered: onboarding', sub: 'Auto-approved (within scope) · 5m ago' },
-  { status: 'pending', title: 'Budget reallocation requested', sub: 'Pending: James (CFO) · 8m ago' },
-  { status: 'approved', title: 'Critical decision: launch gate', sub: 'Approved by Alex · 12m ago' },
-  { status: 'pending', title: 'Agent task assignment', sub: 'Pending review · 1h ago' },
-]
-
-function AuditTrailFeed() {
-  const [index, setIndex] = useState(0)
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: false })
-
-  useEffect(() => {
-    if (!inView) return
-    const t = setInterval(() => {
-      setIndex((i) => (i + 1) % AUDIT_ENTRIES.length)
-    }, 3000)
-    return () => clearInterval(t)
-  }, [inView])
-
-  const entries = [AUDIT_ENTRIES[index], AUDIT_ENTRIES[(index + 1) % AUDIT_ENTRIES.length], AUDIT_ENTRIES[(index + 2) % AUDIT_ENTRIES.length]]
-
-  return (
-    <div ref={ref} className={PROOF_CARD_BASE} style={{ width: 200, minHeight: 160 }}>
-      <div className={PROOF_HEADER}>
-        <Zap className="w-3.5 h-3.5 text-[var(--primary)] shrink-0" strokeWidth={1.5} />
-        Activity log
-      </div>
-      <div className="p-3 space-y-3.5">
-        <AnimatePresence mode="popLayout">
-          {entries.map((entry, i) => (
-            <motion.div
-              key={`${index}-${i}-${entry.title}`}
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="text-left"
-            >
-              <div className="flex items-start gap-2.5">
-                {entry.status === 'approved' ? (
-                  <CheckCircle className="w-3.5 h-3.5 text-[var(--accent-green)] shrink-0 mt-0.5" strokeWidth={1.5} />
-                ) : (
-                  <Clock className="w-3.5 h-3.5 text-[var(--accent-amber)] shrink-0 mt-0.5" strokeWidth={1.5} />
-                )}
-                <div className="min-w-0">
-                  <div className="text-[11px] font-normal text-[var(--text-primary)] leading-snug">{entry.title}</div>
-                  <div className="text-[10px] text-[var(--text-muted)] mt-0.5 opacity-80">{entry.sub}</div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-    </div>
-  )
-}
-
-function IntelligenceLayerProof() {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true })
-  const items = [
-    { label: 'Company data', icon: Database },
-    { label: 'Work context', icon: LayoutDashboard },
-    { label: 'Institutional knowledge', icon: FolderArchive },
-  ]
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 8 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ ...SECTION_TRANSITION, delay: 0.1 }}
-      className={PROOF_CARD_BASE}
-      style={{ width: 200, minHeight: 160 }}
+    <div
+      className="rounded-xl flex flex-col items-center justify-center text-center shadow-md"
+      style={{ width: 120, minHeight: 140, backgroundColor: '#FF492C', color: 'white' }}
     >
-      <div className={PROOF_HEADER}>
-        <Bot className="w-3.5 h-3.5 text-[var(--primary)] shrink-0" strokeWidth={1.5} />
-        Intelligence layer
-      </div>
-      <div className="p-3.5 space-y-3">
-        {items.map(({ label, icon: Icon }) => (
-          <div key={label} className="flex items-center gap-2.5">
-            <CheckCircle className="w-3.5 h-3.5 text-[var(--accent-green)] shrink-0" strokeWidth={1.5} />
-            <span className="text-[11px] font-normal text-[var(--text-primary)] flex-1 min-w-0">{label}</span>
-            <Icon className="w-3.5 h-3.5 text-[var(--text-muted)] shrink-0" strokeWidth={1.5} />
-          </div>
+      <div className="flex gap-0.5 mb-1">
+        {[1, 2, 3, 4, 5].map((i) => (
+          <Star key={i} className="w-3.5 h-3.5 fill-current" strokeWidth={1.5} />
         ))}
       </div>
-    </motion.div>
+      <span className="text-[10px] font-normal opacity-90">G2</span>
+      <span className="text-[11px] font-semibold uppercase leading-tight mt-2">Highest</span>
+      <span className="text-[11px] font-semibold uppercase leading-tight">Adoption</span>
+      <span className="text-[10px] mt-2 opacity-90">Winter 2025</span>
+    </div>
+  )
+}
+
+// Col 4 proof — Row 02: Customer scale stat (Instrument Serif ~48px, CountUp)
+function CustomerScaleStat({ inView }) {
+  const count250 = useCountUp(250, 1200, inView)
+  const count200 = useCountUp(200, 1200, inView)
+  return (
+    <div className="text-right w-full">
+      <div className="font-serif text-[var(--text-primary)] leading-tight" style={{ fontFamily: 'Instrument Serif, serif', fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+        <div>{count250}K+ customers</div>
+        <div>{count200}+ industries</div>
+      </div>
+      <p className="text-[10px] md:text-xs text-[var(--text-muted)] mt-2">From startups to enterprises, worldwide</p>
+    </div>
+  )
+}
+
+// Col 4 proof — Row 03: Fortune 500 stat (60% countUp, no container)
+function Fortune500Stat({ inView }) {
+  const pct = useCountUp(60, 1200, inView)
+  return (
+    <div className="text-right w-full">
+      <div className="font-serif text-[var(--text-primary)] leading-none" style={{ fontFamily: 'Instrument Serif, serif', fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
+        {pct}%
+      </div>
+      <p className="font-sans text-sm text-[var(--text-muted)] mt-1">of the Fortune 500</p>
+      <p className="font-sans text-sm text-[var(--text-muted)]">run on monday</p>
+    </div>
+  )
+}
+
+// Col 4 proof — Row 04: Integration stack (monospace, right-aligned)
+const INTEGRATION_ITEMS = [
+  { label: '200+ integrations', desc: 'Connect your entire stack' },
+  { label: 'REST API', desc: 'Build on top of monday' },
+  { label: 'MCP support', desc: 'Native AI agent protocol' },
+]
+
+function IntegrationStack() {
+  return (
+    <div className="text-right w-full space-y-3">
+      {INTEGRATION_ITEMS.map(({ label, desc }) => (
+        <div key={label}>
+          <div className="font-mono text-xs md:text-sm text-[var(--text-primary)]">{label}</div>
+          <div className="text-[10px] text-[var(--text-muted)] mt-0.5">{desc}</div>
+        </div>
+      ))}
+    </div>
   )
 }
 
 function EditorialProof({ row, inView }) {
-  const statTarget = row.proof === 'stat' ? (row.stat === '250K+' ? 250 : 1) : 0
-  const count = useCountUp(statTarget, row.proof === 'stat' && row.stat === '250K+' ? 1200 : 600, inView && row.proof === 'stat')
-
   if (row.proof === 'g2') return <G2Badge />
-  if (row.proof === 'audit') return <AuditTrailFeed />
-  if (row.proof === 'nodegraph') return <IntelligenceLayerProof />
-  if (row.proof === 'stat') {
-    const display = row.stat === '250K+' ? `${count}K+` : String(count)
-    return (
-      <div className={`${PROOF_CARD_BASE} text-left`} style={{ width: 200, minHeight: 160 }}>
-        <div className={PROOF_HEADER}>
-          <Users className="w-3.5 h-3.5 text-[var(--primary)] shrink-0" strokeWidth={1.5} />
-          {row.statLabel}
-        </div>
-        <div className="p-5 flex flex-col justify-center">
-          <div className="text-2xl md:text-3xl font-normal text-[var(--text-primary)] leading-tight tracking-tight">{display}</div>
-        </div>
-      </div>
-    )
-  }
+  if (row.proof === 'customerScale') return <CustomerScaleStat inView={inView} />
+  if (row.proof === 'fortune500') return <Fortune500Stat inView={inView} />
+  if (row.proof === 'integrations') return <IntegrationStack />
   return null
 }
 
@@ -2110,7 +2044,7 @@ function DifferentiatorsSection() {
         >
           Why monday work management
         </motion.h2>
-        <div className="border-t border-[var(--border-light)]">
+        <div className="border-t border-[var(--dark-border)]">
           {EDITORIAL_ROWS.map((row, i) => (
             <EditorialRow key={row.num} row={row} index={i} inView={inView} />
           ))}
@@ -2128,34 +2062,38 @@ function EditorialRow({ row, index, inView }) {
   return (
     <motion.div
       ref={rowRef}
-      initial={{ opacity: 0, x: fromLeft ? -24 : 24 }}
-      animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ delay: 0.08 + index * 0.06, ...SECTION_TRANSITION }}
-      className="group relative grid grid-cols-[80px_1fr_2fr_200px] max-md:grid-cols-1 gap-4 md:gap-8 py-8 md:py-10 px-0 border-b border-[var(--border-light)] items-center hover:bg-[var(--light-bg)] transition-colors duration-300"
+      initial={{ opacity: 0, y: 20, x: fromLeft ? -24 : 24 }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, ease: SECTION_EASE, delay: index * 0.15 }}
+      className="group relative grid grid-cols-[80px_1fr_2fr_200px] max-md:grid-cols-1 gap-4 md:gap-8 py-8 md:py-10 px-0 border-b border-[var(--dark-border)] items-center hover:bg-white/50 transition-colors duration-300"
     >
       <span className="absolute left-0 top-0 bottom-0 w-0 bg-[var(--primary)] pointer-events-none transition-[width] duration-200 group-hover:w-[3px]" />
-      {/* Col 1: Number */}
+      {/* Col 1: Large number 01–04, mono, muted, ~40px */}
       <div className="flex items-center justify-center md:justify-start transition-transform duration-200 group-hover:scale-110 origin-left">
         <motion.span
-          className="font-mono text-[var(--text-muted)] text-3xl md:text-4xl"
+          className="font-mono text-[var(--text-muted)]"
+          style={{ fontSize: 'clamp(1.75rem, 2.5vw, 2.5rem)', fontVariantNumeric: 'tabular-nums' }}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={rowInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ delay: 0.1 + index * 0.05, duration: 0.4 }}
-          style={{ fontVariantNumeric: 'tabular-nums' }}
+          transition={{ delay: 0.1 + index * 0.15, duration: 0.4 }}
         >
           {row.num}
         </motion.span>
       </div>
-      {/* Col 2: Title */}
-      <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl font-normal text-[var(--text-primary)] leading-tight" style={{ fontFamily: 'Instrument Serif, serif' }}>
+      {/* Col 2: Bold title Instrument Serif ~52px */}
+      <h3
+        className="font-serif font-normal text-[var(--text-primary)] leading-tight"
+        style={{ fontFamily: 'Instrument Serif, serif', fontSize: 'clamp(1.75rem, 3.5vw, 3.25rem)' }}
+      >
         {row.title}
       </h3>
-      {/* Col 3: Body */}
-      <p className="text-[var(--text-muted)] text-base md:text-lg leading-snug max-w-xl">
+      {/* Col 3: Body copy, max 2 lines, Geist/sans */}
+      <p className="font-sans text-[var(--text-muted)] text-base md:text-lg leading-snug line-clamp-2">
         {row.body}
       </p>
-      {/* Col 4: Proof */}
-      <div className="flex justify-end max-md:justify-start">
+      {/* Col 4: Proof element */}
+      <div className="flex justify-end items-center max-md:justify-start min-h-[140px]">
         <EditorialProof row={row} inView={rowInView} />
       </div>
     </motion.div>
