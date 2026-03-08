@@ -102,15 +102,88 @@ const DEMO_FRAMES = {
   RESET: 'reset',
 }
 
+const DEMO_EXAMPLES = [
+  {
+    prompt: 'Create Q3 product launch campaign',
+    boardTitle: 'Project planning',
+    tasks: [
+      { name: 'Finalize kickoff materials', owner: 1, timeline: 80 },
+      { name: 'Identify key resources', owner: 2, timeline: 60 },
+      { name: 'Lead generation presentation', owner: 1, timeline: 40 },
+      { name: 'Conduct a risk assessment', owner: 2, timeline: 100 },
+      { name: 'Meeting with publishers', owner: 1, timeline: 20 },
+    ],
+    agents: [
+      { name: 'Assets Generator', desc: 'Create new ad creatives for Q1 campaign', right: 12, top: 8, gradient: 'linear-gradient(135deg, #4F7CFF 0%, #6C47FF 50%, #e879f9 100%)', delay: 0 },
+      { name: 'Creative Manager', desc: 'Review and approve campaign assets', right: 12, top: 42, gradient: 'linear-gradient(135deg, #F5A623 0%, #e879f9 100%)', delay: 0.15 },
+      { name: 'Campaign Team', desc: 'Publish approved creatives to channels', right: 12, top: 76, gradient: 'linear-gradient(135deg, #00CA72 0%, #4F7CFF 100%)', delay: 0.3 },
+    ],
+    handoffs: [
+      { label: 'Send for approval', top: '28%' },
+      { label: 'Approved by creative manager', top: '48%' },
+      { label: 'Sent to campaign team', top: '68%' },
+    ],
+  },
+  {
+    prompt: 'Plan team offsite and assign tasks',
+    boardTitle: 'Offsite planning',
+    tasks: [
+      { name: 'Book venue and catering', owner: 1, timeline: 100 },
+      { name: 'Send calendar invites', owner: 2, timeline: 70 },
+      { name: 'Prepare breakout sessions', owner: 1, timeline: 50 },
+      { name: 'Organize team activities', owner: 2, timeline: 30 },
+      { name: 'Follow-up survey', owner: 1, timeline: 10 },
+    ],
+    agents: [
+      { name: 'Event Coordinator', desc: 'Reserve venue and manage logistics', right: 12, top: 8, gradient: 'linear-gradient(135deg, #00CA72 0%, #4F7CFF 100%)', delay: 0 },
+      { name: 'People Ops', desc: 'Send invites and track RSVPs', right: 12, top: 42, gradient: 'linear-gradient(135deg, #6C47FF 0%, #e879f9 100%)', delay: 0.15 },
+      { name: 'Facilitator', desc: 'Build agenda and run sessions', right: 12, top: 76, gradient: 'linear-gradient(135deg, #F5A623 0%, #00CA72 100%)', delay: 0.3 },
+    ],
+    handoffs: [
+      { label: 'Venue confirmed', top: '28%' },
+      { label: 'Invites sent', top: '48%' },
+      { label: 'Agenda locked', top: '68%' },
+    ],
+  },
+  {
+    prompt: 'Build sprint backlog from roadmap',
+    boardTitle: 'Sprint backlog',
+    tasks: [
+      { name: 'API auth refactor', owner: 1, timeline: 90 },
+      { name: 'Dashboard redesign', owner: 2, timeline: 45 },
+      { name: 'Write E2E tests', owner: 1, timeline: 60 },
+      { name: 'Deploy staging', owner: 2, timeline: 100 },
+      { name: 'Document API', owner: 1, timeline: 25 },
+    ],
+    agents: [
+      { name: 'Backlog Agent', desc: 'Break down roadmap into sprint items', right: 12, top: 8, gradient: 'linear-gradient(135deg, #4F7CFF 0%, #6C47FF 100%)', delay: 0 },
+      { name: 'Dev Lead', desc: 'Estimate and assign to team', right: 12, top: 42, gradient: 'linear-gradient(135deg, #e879f9 0%, #F5A623 100%)', delay: 0.15 },
+      { name: 'QA Agent', desc: 'Add test cases and acceptance criteria', right: 12, top: 76, gradient: 'linear-gradient(135deg, #00CA72 0%, #4F7CFF 100%)', delay: 0.3 },
+    ],
+    handoffs: [
+      { label: 'Stories created', top: '28%' },
+      { label: 'Assigned to sprint', top: '48%' },
+      { label: 'Ready for dev', top: '68%' },
+    ],
+  },
+]
+
 function HeroDemo() {
   const [frame, setFrame] = useState(DEMO_FRAMES.IDLE)
   const [typedText, setTypedText] = useState('')
   const [showConfetti, setShowConfetti] = useState(false)
-  const fullPrompt = 'Create Q3 product launch campaign'
+  const [exampleIndex, setExampleIndex] = useState(0)
+  const nextExampleRef = useRef(0)
+  const example = DEMO_EXAMPLES[exampleIndex]
 
   useEffect(() => {
     let cancelled = false
     const run = async () => {
+      const idx = nextExampleRef.current
+      nextExampleRef.current = (nextExampleRef.current + 1) % DEMO_EXAMPLES.length
+      setExampleIndex(idx)
+      const current = DEMO_EXAMPLES[idx]
+      const fullPrompt = current.prompt
       await delay(500)
       if (cancelled) return
       setFrame(DEMO_FRAMES.TYPING)
@@ -142,7 +215,7 @@ function HeroDemo() {
       if (cancelled) return
       setTypedText('')
       setFrame(DEMO_FRAMES.IDLE)
-      await delay(300)
+      await delay(400)
       if (cancelled) return
       run()
     }
@@ -203,7 +276,7 @@ function HeroDemo() {
               {/* Project board — light theme */}
               <div className="h-full flex flex-col p-3 md:p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-sm font-normal text-[var(--text-primary)]">Project planning</h3>
+                  <h3 className="text-sm font-normal text-[var(--text-primary)]">{example.boardTitle}</h3>
                   <div className="flex gap-1 text-xs text-[var(--text-muted)]">
                     <span className="px-2 py-1 rounded bg-white border border-[var(--border-light)] font-normal text-[var(--text-primary)]">Main table</span>
                     <span className="px-2 py-1 rounded">Gantt</span>
@@ -224,13 +297,7 @@ function HeroDemo() {
                     </thead>
                     <tbody>
                       <tr><td colSpan={6} className="py-1.5 pl-2 text-xs font-normal text-[var(--text-muted)] bg-[#f5f5f5]">This month</td></tr>
-                      {[
-                        { name: 'Finalize kickoff materials', owner: 1, timeline: 80, status: 'Done' },
-                        { name: 'Identify key resources', owner: 2, timeline: 60, status: 'Working on it' },
-                        { name: 'Lead generation presentation', owner: 1, timeline: 40, status: 'Stuck' },
-                        { name: 'Conduct a risk assessment', owner: 2, timeline: 100, status: 'Done' },
-                        { name: 'Meeting with publishers', owner: 1, timeline: 20, status: 'Working on it' },
-                      ].map((row, i) => {
+                      {example.tasks.map((row, i) => {
                         const showDone = frame === DEMO_FRAMES.DONE
                         const showWorking = frame === DEMO_FRAMES.AGENTS
                         const showEmpty = frame === DEMO_FRAMES.BOARD
@@ -305,11 +372,7 @@ function HeroDemo() {
               {(frame === DEMO_FRAMES.AGENTS || frame === DEMO_FRAMES.DONE) && (
                 <>
                   {/* Agent cards — different roles */}
-                  {[
-                    { name: 'Assets Generator', desc: 'Create new ad creatives for Q1 campaign', right: 12, top: 8, gradient: 'linear-gradient(135deg, #4F7CFF 0%, #6C47FF 50%, #e879f9 100%)', delay: 0 },
-                    { name: 'Creative Manager', desc: 'Review and approve campaign assets', right: 12, top: 42, gradient: 'linear-gradient(135deg, #F5A623 0%, #e879f9 100%)', delay: 0.15 },
-                    { name: 'Campaign Team', desc: 'Publish approved creatives to channels', right: 12, top: 76, gradient: 'linear-gradient(135deg, #00CA72 0%, #4F7CFF 100%)', delay: 0.3 },
-                  ].map((agent, i) => (
+                  {example.agents.map((agent, i) => (
                     <motion.div
                       key={agent.name}
                       initial={{ opacity: 0, scale: 0.95, x: 8 }}
@@ -331,11 +394,7 @@ function HeroDemo() {
                   ))}
 
                   {/* Completed cards — green border (handoffs between agents) */}
-                  {[
-                    { label: 'Send for approval', top: '28%' },
-                    { label: 'Approved by creative manager', top: '48%' },
-                    { label: 'Sent to campaign team', top: '68%' },
-                  ].map((card, i) => (
+                  {example.handoffs.map((card, i) => (
                     <motion.div
                       key={card.label}
                       initial={{ opacity: 0, x: 8 }}
@@ -462,10 +521,7 @@ function HeroLogoRow() {
   return (
     <section className="py-8 md:py-10 px-6 md:px-10 border-t border-[var(--border-light)] bg-white">
       <div className="max-w-4xl mx-auto">
-        <p className="text-center text-xs font-normal text-[var(--text-muted)] uppercase tracking-wider mb-6">
-          Trusted by teams at
-        </p>
-        <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
+        <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4 mb-4">
           {HERO_LOGOS.map((name) => (
             <span
               key={name}
@@ -475,6 +531,14 @@ function HeroLogoRow() {
             </span>
           ))}
         </div>
+        <p className="text-center text-[10px] md:text-xs text-[var(--text-muted)]/80 font-normal flex items-center justify-center gap-1 flex-wrap">
+          <span className="inline-flex gap-0.5" aria-hidden>
+            {[1, 2, 3, 4, 5].map((i) => (
+              <Star key={i} className="w-3 h-3 fill-[var(--text-muted)] text-[var(--text-muted)]" strokeWidth={1.5} />
+            ))}
+          </span>
+          G2 Highest Adoption · Winter 2025
+        </p>
       </div>
     </section>
   )
