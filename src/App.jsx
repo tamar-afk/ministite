@@ -470,7 +470,7 @@ function HeroSection() {
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="font-sans font-normal leading-[1.15] mb-6"
         >
-          <span className="hero-headline-gradient block text-6xl md:text-7xl lg:text-8xl xl:text-9xl max-w-4xl mx-auto tracking-tight">
+          <span className="hero-headline-gradient block text-5xl md:text-6xl lg:text-7xl xl:text-8xl max-w-4xl mx-auto tracking-tight">
             Finally, your output can catch up to your ambition.
           </span>
         </motion.h1>
@@ -1522,9 +1522,9 @@ function GuardrailsSection() {
           initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.12, ...SECTION_TRANSITION }}
-          className="text-base md:text-lg text-[var(--text-muted)] text-center mb-14 md:mb-16"
+          className="text-base md:text-lg text-[var(--text-muted)] text-center mb-14 md:mb-16 max-w-2xl mx-auto"
         >
-          A few toggles. Full control. It’s that easy.
+          You decide what people and AI can do. Easy.
         </motion.p>
 
         <div className="grid md:grid-cols-[0.4fr_0.6fr] gap-10 md:gap-14 items-start">

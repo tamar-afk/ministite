@@ -1,3 +1,11 @@
+# Minisite — UPDATED (monday work management)
+
+**This folder is the updated version. Do not overwrite or mix with the other minisite.**
+
+The **original** version (Glean, static HTML/CSS) lives in the sibling folder **`minisite-original`**. Keep this folder for the monday-style app only.
+
+---
+
 # monday work management — Landing Page
 
 A high-fidelity, animated marketing landing page for **monday work management**, built with React, Tailwind CSS, and Framer Motion.
