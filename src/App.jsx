@@ -482,7 +482,7 @@ function HeroSection() {
           transition={{ duration: 0.5, delay: 0.25 }}
           className="text-base md:text-lg text-[var(--text-muted)] max-w-2xl mx-auto mb-8"
         >
-          You set the direction and your agents execute at scale, for every team and every use case. All on one work platform.
+          You set the direction and your agents execute at scale, for every team and every use case.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -883,7 +883,7 @@ function SolutionsSection() {
           transition={{ delay: 0.08, ...SECTION_TRANSITION }}
           className="font-sans font-normal text-4xl md:text-5xl text-[var(--text-primary)] text-center mb-4"
         >
-          Solutions for every team, agents for any task
+          Solutions for every team. Agents for any task.
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
@@ -891,7 +891,7 @@ function SolutionsSection() {
           transition={{ delay: 0.14, ...SECTION_TRANSITION }}
           className="text-center text-[var(--text-muted)] text-lg md:text-xl max-w-2xl mx-auto mb-10"
         >
-          Purpose-built for every team. Agents and workflows that scale with you.
+          A complete solution for every team, with agents that do the work.
         </motion.p>
         {/* Departments bar — circular avatars + labels, light background */}
         <div className="rounded-2xl bg-white border border-[var(--border-light)] p-4 md:p-5 mb-10 overflow-x-auto">
@@ -1747,7 +1747,7 @@ function OrgIntelligenceSection() {
           transition={{ delay: 0.12, ...SECTION_TRANSITION }}
           className="text-xl text-[var(--text-muted)] max-w-2xl mx-auto"
         >
-          One unified layer that powers both your teams and your agents.
+          All of your organizational knowledge in one place.
         </motion.p>
       </div>
       <div className="w-full flex justify-center px-0">
@@ -1914,8 +1914,10 @@ function VibeAppSection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-12"
         >
-          <h2 className="font-sans font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[var(--text-primary)] mb-3 md:whitespace-nowrap">
-            Any workflow, any view, any app. In minutes.
+          <h2 className="font-sans font-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[var(--text-primary)] mb-3 leading-tight">
+            Any workflow, any view, any app.
+            <br />
+            <span className="block mt-1">In minutes.</span>
           </h2>
           <p className="text-[var(--text-muted)] text-lg md:text-xl max-w-2xl mx-auto mb-4">
             Generate any view or app to fit how your teams work, on top of monday work management.
@@ -2095,18 +2097,20 @@ function EditorialProof({ row, inView }) {
   return null
 }
 
-// Flip card: click (or hover on desktop) to show proof on back
-function FlipCard({ front, back, className = '', delay = 0, inView }) {
+// Flip card: click (or hover on desktop) to show proof on back. size: 'default' (larger) | 'compact' (smaller)
+function FlipCard({ front, back, className = '', delay = 0, inView, size = 'default' }) {
   const [flipped, setFlipped] = useState(false)
+  const isCompact = size === 'compact'
+  const minH = isCompact ? 'min-h-[200px] md:min-h-[220px]' : 'min-h-[240px] md:min-h-[280px]'
   return (
     <motion.div
       initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay, ...SECTION_TRANSITION }}
-      className={`perspective-[1000px] min-h-[200px] md:min-h-[220px] ${className}`}
+      className={`perspective-[1000px] ${minH} ${className}`}
     >
       <motion.div
-        className="relative w-full h-full min-h-[200px] md:min-h-[220px] cursor-pointer"
+        className={`relative w-full h-full ${minH} cursor-pointer`}
         onClick={() => setFlipped((f) => !f)}
         style={{ transformStyle: 'preserve-3d' }}
         animate={{ rotateY: flipped ? 180 : 0 }}
@@ -2128,28 +2132,28 @@ function DifferentiatorsSection() {
   const inView = useInView(ref, { once: true, margin: '0px 0px 80px 0px' })
 
   return (
-    <section ref={ref} className="py-16 md:py-24 bg-[var(--light-bg)] overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6 md:px-10">
+    <section ref={ref} className="py-20 md:py-32 bg-[var(--light-bg)] overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
         <motion.h2
           initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.06, ...SECTION_TRANSITION }}
-          className="font-sans font-normal text-4xl md:text-5xl text-[var(--text-primary)] mb-10 md:mb-12"
+          className="font-sans font-normal text-4xl md:text-5xl text-[var(--text-primary)] mb-14 md:mb-16"
         >
           Why monday work management
         </motion.h2>
 
         {/* Top row: 2 flip cards with proof points */}
-        <div className="grid md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-10 mb-10 md:mb-14">
           <FlipCard
             delay={0.1}
             inView={inView}
             front={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between">
+              <div className="bg-white rounded-2xl p-8 md:p-10 flex flex-col min-h-[240px] md:min-h-[280px] justify-between">
                 <h3 className="font-sans font-semibold text-xl md:text-2xl text-[var(--text-primary)] pr-10">
                   Ease of use that drives proven adoption
                 </h3>
-                <p className="text-[var(--text-muted)] text-sm md:text-base mt-2 leading-relaxed">
+                <p className="text-[var(--text-muted)] text-sm md:text-base mt-3 leading-relaxed">
                   Hyper-personalization and intuitive design drive the adoption rates that give you a complete picture of work.
                 </p>
                 <div className="flex justify-end">
@@ -2158,7 +2162,7 @@ function DifferentiatorsSection() {
               </div>
             }
             back={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] items-center justify-center">
+              <div className="bg-white rounded-2xl p-8 md:p-10 flex flex-col min-h-[240px] md:min-h-[280px] items-center justify-center">
                 <G2Badge />
               </div>
             }
@@ -2167,11 +2171,11 @@ function DifferentiatorsSection() {
             delay={0.14}
             inView={inView}
             front={
-              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between" style={{ backgroundColor: 'rgba(79, 124, 255, 0.08)' }}>
+              <div className="rounded-2xl p-8 md:p-10 flex flex-col min-h-[240px] md:min-h-[280px] justify-between" style={{ backgroundColor: 'rgba(79, 124, 255, 0.08)' }}>
                 <h3 className="font-sans font-semibold text-xl md:text-2xl text-[var(--text-primary)] pr-10">
                   Expertise built on real-world work
                 </h3>
-                <p className="text-[var(--text-muted)] text-sm md:text-base mt-2 leading-relaxed">
+                <p className="text-[var(--text-muted)] text-sm md:text-base mt-3 leading-relaxed">
                   AI capabilities informed by 250K+ customers across industries and the patterns of the world's most productive teams.
                 </p>
                 <div className="flex justify-end">
@@ -2180,7 +2184,7 @@ function DifferentiatorsSection() {
               </div>
             }
             back={
-              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] items-center justify-center" style={{ backgroundColor: 'rgba(79, 124, 255, 0.08)' }}>
+              <div className="rounded-2xl p-8 md:p-10 flex flex-col min-h-[240px] md:min-h-[280px] items-center justify-center" style={{ backgroundColor: 'rgba(79, 124, 255, 0.08)' }}>
                 <CustomerScaleStat inView={inView} />
               </div>
             }
@@ -2188,12 +2192,12 @@ function DifferentiatorsSection() {
         </div>
 
         {/* Middle: image + Deep understanding flip card (proof: integrations) */}
-        <div className="grid md:grid-cols-3 gap-4 md:gap-6 mb-4 md:mb-6">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-10 mb-10 md:mb-14">
           <motion.div
             initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.18, ...SECTION_TRANSITION }}
-            className="md:col-span-2 rounded-2xl overflow-hidden aspect-[2.2/1] md:aspect-auto md:min-h-[240px] bg-[var(--dark)]"
+            className="md:col-span-2 rounded-2xl overflow-hidden aspect-[2.2/1] md:aspect-auto md:min-h-[280px] bg-[var(--dark)]"
           >
             <img
               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80"
@@ -2205,11 +2209,11 @@ function DifferentiatorsSection() {
             delay={0.2}
             inView={inView}
             front={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+              <div className="bg-white rounded-2xl p-8 md:p-10 flex flex-col min-h-[240px] md:min-h-[280px] justify-between">
                 <h3 className="font-sans font-semibold text-xl md:text-2xl text-[var(--text-primary)] pr-10">
                   Deep understanding of your business
                 </h3>
-                <p className="text-[var(--text-muted)] text-sm md:text-base mt-2 leading-relaxed">
+                <p className="text-[var(--text-muted)] text-sm md:text-base mt-3 leading-relaxed">
                   Unifies your data, work context, and institutional knowledge into a single intelligence layer for people and agents.
                 </p>
                 <div className="flex justify-end">
@@ -2218,20 +2222,21 @@ function DifferentiatorsSection() {
               </div>
             }
             back={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] items-center justify-center">
+              <div className="bg-white rounded-2xl p-8 md:p-10 flex flex-col min-h-[240px] md:min-h-[280px] items-center justify-center">
                 <IntegrationStack />
               </div>
             }
           />
         </div>
 
-        {/* Bottom row: 4 flip cards — Enterprise, G2, Gartner, Forrester */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Bottom row: 4 flip cards — Enterprise, G2, Gartner, Forrester (smaller) */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           <FlipCard
+            size="compact"
             delay={0.22}
             inView={inView}
             front={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between">
                 <h3 className="font-sans font-semibold text-lg text-[var(--text-primary)]">
                   Enterprise control without compromise
                 </h3>
@@ -2244,16 +2249,17 @@ function DifferentiatorsSection() {
               </div>
             }
             back={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] items-center justify-center">
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] items-center justify-center">
                 <Fortune500Stat inView={inView} />
               </div>
             }
           />
           <FlipCard
+            size="compact"
             delay={0.26}
             inView={inView}
             front={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between">
                 <h3 className="font-sans font-semibold text-lg text-[var(--text-primary)]">
                   Most popular work management software on G2
                 </h3>
@@ -2266,7 +2272,7 @@ function DifferentiatorsSection() {
               </div>
             }
             back={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-center">
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-center">
                 <div className="rounded-xl flex flex-col items-center justify-center text-center py-4 px-3 mb-3" style={{ backgroundColor: '#FF492C', color: 'white', minHeight: 100 }}>
                   <span className="text-[10px] font-semibold uppercase tracking-wider opacity-90">Leader</span>
                   <span className="text-xs mt-1 font-medium">WINTER 2026</span>
@@ -2282,10 +2288,11 @@ function DifferentiatorsSection() {
             }
           />
           <FlipCard
+            size="compact"
             delay={0.28}
             inView={inView}
             front={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between">
                 <h3 className="font-sans font-semibold text-lg text-[var(--text-primary)]">
                   Leader in Gartner Magic Quadrant
                 </h3>
@@ -2298,7 +2305,7 @@ function DifferentiatorsSection() {
               </div>
             }
             back={
-              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between">
+              <div className="bg-white rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between">
                 <p className="font-sans font-normal text-lg text-[var(--text-primary)] mb-2">The only Leader in</p>
                 <p className="text-4xl md:text-5xl font-normal text-[var(--text-primary)] mb-1">3</p>
                 <p className="text-sm text-[var(--text-muted)] mb-4">Work Management Gartner® Magic Quadrant™ reports.</p>
@@ -2312,10 +2319,11 @@ function DifferentiatorsSection() {
             }
           />
           <FlipCard
+            size="compact"
             delay={0.3}
             inView={inView}
             front={
-              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between" style={{ backgroundColor: 'var(--accent-green)' }}>
+              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between" style={{ backgroundColor: 'var(--accent-green)' }}>
                 <h3 className="font-sans font-semibold text-lg text-white">
                   Recognized by industry leaders
                 </h3>
@@ -2328,7 +2336,7 @@ function DifferentiatorsSection() {
               </div>
             }
             back={
-              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] justify-between" style={{ backgroundColor: 'var(--accent-green)' }}>
+              <div className="rounded-2xl p-6 md:p-8 flex flex-col min-h-[200px] md:min-h-[220px] justify-between" style={{ backgroundColor: 'var(--accent-green)' }}>
                 <div>
                   <p className="text-5xl md:text-6xl font-bold text-white leading-none">346%</p>
                   <p className="text-sm text-white/90 mt-2 leading-snug">
