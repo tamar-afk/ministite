@@ -482,7 +482,9 @@ function HeroSection() {
           transition={{ duration: 0.5, delay: 0.25 }}
           className="text-base md:text-lg text-[var(--text-muted)] max-w-2xl mx-auto mb-8"
         >
-          You set the direction and your agents execute at scale, for every team and every use case.
+          The complete work platform where people lead and agents
+          <br />
+          scale execution across every team and use case.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -550,43 +552,43 @@ function HeroLogoRow() {
 const SOLUTIONS = [
   { id: 'pmo', name: 'PMO', title: 'PMO', boardType: 'table',
     desc: 'Align every project to strategic goals with structured plans, real-time resource tracking, and executive-ready visibility across portfolios.',
-    bullets: ['Portfolio dashboards', 'Resource capacity', 'Strategic alignment'],
+    bullets: ['Update project timelines and status for you', 'Allocate resources across portfolios', 'Surface risks and keep dashboards current'],
     columns: ['Project', 'Owner', 'Status', 'Timeline', 'Budget'],
     rows: ['Q3 Product Launch', 'Enterprise Security Rollout', 'CRM Migration Phase 2'],
   },
   { id: 'legal', name: 'Legal', title: 'Legal', boardType: 'kanban',
     desc: 'Command compliance and contracts with a gated, governed platform that executes high-stakes reviews with total precision.',
-    bullets: ['Contract lifecycle', 'Compliance gates', 'Audit trails'],
+    bullets: ['Draft and route contracts for review', 'Run compliance checks automatically', 'Assign and track review tasks'],
     columns: ['Matter', 'Type', 'Review Stage', 'Due'],
     rows: ['NDA - Acme Corp', 'MSA Renewal - Vendor X', 'IP License Review'],
   },
   { id: 'hr', name: 'HR', title: 'HR', boardType: 'list',
     desc: 'Transform complex people processes into automated workflows that retain institutional knowledge even as your team grows.',
-    bullets: ['Onboarding flows', 'Performance cycles', 'Knowledge base'],
+    bullets: ['Run onboarding workflows for new hires', 'Send and track review reminders', 'Keep policies and docs in sync'],
     columns: ['Process', 'Assignee', 'Status', 'Due'],
     rows: ['Q2 Onboarding - 12 hires', 'Review cycle 2025', 'Policy update rollout'],
   },
   { id: 'product', name: 'Product', title: 'Product', boardType: 'timeline',
     desc: 'Ship with confidence using roadmaps, sprint boards, and AI-powered prioritization aligned to your product strategy.',
-    bullets: ['Roadmaps', 'Sprint boards', 'AI prioritization'],
+    bullets: ['Prioritize your backlog by impact', 'Suggest sprint plans and capacity', 'Update feature status across tools'],
     columns: ['Feature', 'Sprint', 'Status', 'Owner'],
     rows: ['Checkout redesign', 'API v3', 'Mobile push notifications'],
   },
   { id: 'marketing', name: 'Marketing', title: 'Marketing', boardType: 'cards',
     desc: 'Scale creative output without increasing headcount using AI agents that execute campaigns within your brand context.',
-    bullets: ['Campaign boards', 'Asset approval', 'Brand context'],
+    bullets: ['Schedule and publish campaigns for you', 'Generate briefs and first-draft assets', 'Route and approve creatives'],
     columns: ['Campaign', 'Channel', 'Status', 'Launch'],
     rows: ['Q3 Launch Campaign', 'Webinar - Demand Gen', 'Social Q4'],
   },
   { id: 'it', name: 'IT', title: 'IT', boardType: 'compact',
     desc: 'Streamline tickets, incidents, and infrastructure changes with automated routing and real-time SLA tracking.',
-    bullets: ['Ticket routing', 'SLA tracking', 'Change management'],
+    bullets: ['Route and triage tickets to the right team', 'Track SLAs and escalate when needed', 'Validate configs and run checks'],
     columns: ['Ticket', 'Type', 'Priority', 'SLA'],
     rows: ['VPN access - J. Smith', 'Server upgrade prod', 'SSO integration'],
   },
   { id: 'operations', name: 'Operations', title: 'Operations', boardType: 'stages',
     desc: 'Orchestrate cross-functional workflows with smart automations, approvals, and operational dashboards that actually reflect reality.',
-    bullets: ['Workflow automation', 'Approvals', 'Live dashboards'],
+    bullets: ['Run approval workflows and handoffs', 'Update operational dashboards in real time', 'Automate repetitive steps for you'],
     columns: ['Workflow', 'Stage', 'Owner', 'Next action'],
     rows: ['Vendor onboarding', 'CapEx approval Q3', 'Inventory cycle count'],
   },
@@ -891,7 +893,7 @@ function SolutionsSection() {
           transition={{ delay: 0.14, ...SECTION_TRANSITION }}
           className="text-center text-[var(--text-muted)] text-lg md:text-xl max-w-2xl mx-auto mb-10"
         >
-          A complete solution for every team, with agents that do the work.
+          Work solutions built for how your teams work, with specialized agents that complete tasks for you.
         </motion.p>
         {/* Departments bar — circular avatars + labels, light background */}
         <div className="rounded-2xl bg-white border border-[var(--border-light)] p-4 md:p-5 mb-10 overflow-x-auto">
@@ -1791,71 +1793,117 @@ const VIBE_PILLS = ['OKR monitoring', 'Project tracker', 'Project documentation'
 // Short window titles per app type
 const VIBE_WINDOW_TITLES = ['Project tracker · TechConnect 2026', 'OKR dashboard · Q4 goals', 'Risk register · Compliance']
 
-// Desktop app window — one per prompt, stacks like overlapping cards
+// Desktop app window — one per prompt, each with a completely different design (any view/app)
 function VibeAppWindow({ index, stackPosition, totalInStack }) {
   const cards = VIBE_APP_SETS[index] || VIBE_APP_SETS[0]
   const title = VIBE_WINDOW_TITLES[index] ?? 'App'
-  // Back cards at (0,0); each newer card offset down-right so they stack like a pack
   const offset = stackPosition * 28
   const scale = 1 - (totalInStack - 1 - stackPosition) * 0.04
   const zIndex = stackPosition
 
+  // Card 0: Project tracker — light, classic window with grid
+  if (index === 0) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.4, type: 'spring', stiffness: 300, damping: 30 }}
+        style={{ position: 'absolute', left: offset, top: offset, zIndex, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+        className="w-full max-w-[420px] rounded-2xl border-2 border-[var(--border-light)] bg-white shadow-xl overflow-hidden"
+      >
+        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[var(--border-light)] bg-[var(--light-bg)]">
+          <div className="flex gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
+          </div>
+          <span className="text-xs text-[var(--text-muted)] truncate flex-1 ml-2 font-normal">{title}</span>
+        </div>
+        <div className="p-5 pb-6 bg-white">
+          <h3 className="font-sans font-semibold text-lg text-[var(--text-primary)] mb-1">{cards[0]?.title}</h3>
+          <p className="text-sm text-[var(--text-muted)] mb-4">{cards[0]?.sub}</p>
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            {cards.slice(1, 5).map((card, i) => (
+              <div key={i} className={`rounded-lg border p-3 ${card.primary ? 'bg-[var(--primary)]/10 border-[var(--primary)]/40' : 'bg-[var(--light-bg)] border-[var(--border-light)]'}`}>
+                <div className={`font-normal text-xs ${card.primary ? 'text-[var(--primary)]' : 'text-[var(--text-primary)]'}`}>{card.title}</div>
+                <div className={`text-[10px] mt-0.5 ${card.primary ? 'text-[var(--primary)]/80' : 'text-[var(--text-muted)]'}`}>{card.sub}</div>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <span className="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-medium">Open app</span>
+            <span className="px-3 py-1.5 rounded-lg border border-[var(--border-light)] text-[var(--text-muted)] text-xs font-normal">Share</span>
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
+
+  // Card 1: OKR dashboard — dark theme, single-column list style, minimal chrome
+  if (index === 1) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.96, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.4, type: 'spring', stiffness: 300, damping: 30 }}
+        style={{ position: 'absolute', left: offset, top: offset, zIndex, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+        className="w-full max-w-[380px] rounded-xl overflow-hidden shadow-2xl border border-white/10"
+      >
+        <div className="bg-[var(--dark)] px-4 py-3 flex items-center justify-between">
+          <span className="text-xs font-medium text-white/90">{title}</span>
+          <div className="flex gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+            <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+          </div>
+        </div>
+        <div className="bg-[#1a1a2e] p-4">
+          <h3 className="font-sans font-semibold text-base text-white mb-1">{cards[0]?.title}</h3>
+          <p className="text-xs text-white/60 mb-4">{cards[0]?.sub}</p>
+          <div className="space-y-2 mb-4">
+            {cards.slice(1, 5).map((card, i) => (
+              <div key={i} className={`flex items-center justify-between py-2 px-3 rounded-lg ${card.primary ? 'bg-[var(--primary)]/30 text-white' : 'bg-white/5 text-white/90'}`}>
+                <span className="text-xs font-medium">{card.title}</span>
+                <span className="text-[10px] text-white/50">{card.sub}</span>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <span className="px-3 py-1.5 rounded-md bg-[var(--primary)] text-white text-xs font-medium">Open app</span>
+            <span className="px-3 py-1.5 rounded-md bg-white/10 text-white/80 text-xs">Share</span>
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
+
+  // Card 2: Risk register — warm/amber accent, tabbed chrome, 2x2 panels with different styling
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96, y: 12 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.4, type: 'spring', stiffness: 300, damping: 30 }}
-      style={{
-        position: 'absolute',
-        left: offset,
-        top: offset,
-        zIndex,
-        transform: `scale(${scale})`,
-        transformOrigin: 'top left',
-      }}
-      className="w-full max-w-[420px] rounded-xl border border-[var(--border-light)] bg-white shadow-xl overflow-hidden"
+      style={{ position: 'absolute', left: offset, top: offset, zIndex, transform: `scale(${scale})`, transformOrigin: 'top left' }}
+      className="w-full max-w-[400px] rounded-lg overflow-hidden shadow-xl border-2 border-amber-200/60 bg-amber-50/30"
     >
-      {/* Window chrome */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[var(--border-light)] bg-[var(--light-bg)]">
-        <div className="flex gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
-        </div>
-        <span className="text-xs text-[var(--text-muted)] truncate flex-1 ml-2 font-normal">{title}</span>
+      <div className="flex border-b border-amber-200/80 bg-amber-100/50">
+        <div className="px-4 py-2.5 text-xs font-semibold text-amber-900 border-b-2 border-amber-500">App</div>
+        <div className="px-4 py-2.5 text-xs text-amber-700/80">{title}</div>
       </div>
-      {/* App content — landing-style */}
-      <div className="p-5 pb-6 bg-white">
-        <h3 className="font-sans font-normal text-lg text-[var(--text-primary)] mb-1">
-          {cards[0]?.title}
-        </h3>
-        <p className="text-sm text-[var(--text-muted)] mb-4">{cards[0]?.sub}</p>
+      <div className="p-4 bg-white/80">
+        <h3 className="font-sans font-bold text-amber-900 text-base mb-0.5">{cards[0]?.title}</h3>
+        <p className="text-xs text-amber-800/70 mb-3">{cards[0]?.sub}</p>
         <div className="grid grid-cols-2 gap-2 mb-4">
           {cards.slice(1, 5).map((card, i) => (
-            <div
-              key={i}
-              className={`rounded-lg border p-3 ${
-                card.primary
-                  ? 'bg-[var(--primary)]/10 border-[var(--primary)]/40'
-                  : 'bg-[var(--light-bg)] border-[var(--border-light)]'
-              }`}
-            >
-              <div className={`font-normal text-xs ${card.primary ? 'text-[var(--primary)]' : 'text-[var(--text-primary)]'}`}>
-                {card.title}
-              </div>
-              <div className={`text-[10px] mt-0.5 ${card.primary ? 'text-[var(--primary)]/80' : 'text-[var(--text-muted)]'}`}>
-                {card.sub}
-              </div>
+            <div key={i} className={`rounded-md border p-2.5 ${card.primary ? 'bg-amber-500/20 border-amber-500/50' : 'bg-white border-amber-200/60'}`}>
+              <div className={`text-[11px] font-semibold ${card.primary ? 'text-amber-900' : 'text-amber-800/90'}`}>{card.title}</div>
+              <div className="text-[10px] text-amber-700/70 mt-0.5">{card.sub}</div>
             </div>
           ))}
         </div>
         <div className="flex gap-2">
-          <span className="px-3 py-1.5 rounded-lg bg-[var(--primary)] text-white text-xs font-normal">
-            Open app
-          </span>
-          <span className="px-3 py-1.5 rounded-lg border border-[var(--border-light)] text-[var(--text-muted)] text-xs font-normal">
-            Share
-          </span>
+          <span className="px-3 py-1.5 rounded-md bg-amber-600 text-white text-xs font-semibold">Open app</span>
+          <span className="px-3 py-1.5 rounded-md border border-amber-300 text-amber-800 text-xs font-medium">Share</span>
         </div>
       </div>
     </motion.div>
@@ -1950,11 +1998,11 @@ function VibeAppSection() {
               Discuss
             </button>
           </div>
-          <div className="flex flex-wrap gap-2 mt-4">
+          <div className="flex flex-nowrap gap-2 mt-4 overflow-x-auto">
             {VIBE_PILLS.map((label) => (
               <span
                 key={label}
-                className="px-3 py-1.5 rounded-full text-xs font-normal border border-[var(--border-light)] text-[var(--text-muted)] hover:border-[var(--primary)] hover:text-[var(--primary)] cursor-default"
+                className="shrink-0 px-3 py-1.5 rounded-full text-xs font-normal border border-[var(--border-light)] text-[var(--text-muted)] hover:border-[var(--primary)] hover:text-[var(--primary)] cursor-default"
               >
                 {label}
               </span>
