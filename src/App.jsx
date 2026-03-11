@@ -1245,10 +1245,10 @@ function LifecycleSection() {
       <div className="hidden md:block sticky top-0 min-h-screen flex flex-col justify-center py-20">
         <div className="max-w-5xl mx-auto px-6 md:px-10 w-full">
           <h2 className="font-sans font-normal text-4xl md:text-5xl text-[var(--text-primary)] text-center mb-4">
-            From intent to outcome, powered by AI
+            Every step of work, in one place.
           </h2>
           <p className="text-center text-[var(--text-muted)] text-lg md:text-xl max-w-2xl mx-auto mb-16">
-            Every step of work, in one place.
+            From intent to outcome, powered by AI
           </p>
           {/* Full-width title + description so copy spans the component */}
           <AnimatePresence mode="wait" initial={false}>
@@ -1330,10 +1330,10 @@ function LifecycleSection() {
       {/* Mobile: simple stepper */}
       <div className="md:hidden py-20 px-6 bg-[var(--light-bg)]">
         <h2 className="font-sans font-normal text-4xl text-[var(--text-primary)] text-center mb-4">
-          From intent to outcome, powered by AI
+          Every step of work, in one place.
         </h2>
         <p className="text-center text-[var(--text-muted)] text-lg max-w-xl mx-auto mb-10">
-          Every step of work, in one place.
+          From intent to outcome, powered by AI
         </p>
         <div className="flex flex-col items-center gap-2 mb-8">
           <div className="flex gap-2">
