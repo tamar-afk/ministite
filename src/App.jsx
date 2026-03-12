@@ -37,6 +37,23 @@ function useCountUp(target, duration = 1500, inView) {
   return count
 }
 
+// ----- Logo (monday.com-style 2x2 dot mark + wordmark) -----
+function MondayLogo({ className = '', textClassName = '', showWorkManagement = false }) {
+  return (
+    <span className={`inline-flex items-center gap-2 ${className}`}>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0" aria-hidden>
+        <rect width="8" height="8" x="2" y="2" rx="2" fill="var(--primary)" />
+        <rect width="8" height="8" x="14" y="2" rx="2" fill="var(--primary)" />
+        <rect width="8" height="8" x="2" y="14" rx="2" fill="var(--primary)" />
+        <rect width="8" height="8" x="14" y="14" rx="2" fill="var(--primary)" />
+      </svg>
+      <span className={`font-normal text-lg text-[var(--text-primary)] ${textClassName}`}>
+        monday{showWorkManagement ? ' work management' : ''}
+      </span>
+    </span>
+  )
+}
+
 // ----- Navbar -----
 function Navbar({ scrolled }) {
   const links = ['Product', 'Solutions', 'Pricing', 'Enterprise']
@@ -51,8 +68,7 @@ function Navbar({ scrolled }) {
     >
       <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 flex items-center justify-between h-16">
         <a href="#" className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-[var(--primary)]" />
-          <span className="font-normal text-lg text-[var(--text-primary)]">monday</span>
+          <MondayLogo />
         </a>
         <div className="hidden md:flex items-center gap-8">
           {links.map((link, i) => (
@@ -482,9 +498,7 @@ function HeroSection() {
           transition={{ duration: 0.5, delay: 0.25 }}
           className="text-base md:text-lg text-[var(--text-muted)] max-w-2xl mx-auto mb-8"
         >
-          The complete work platform where people lead and agents
-          <br />
-          scale execution across every team and use case.
+          The complete work platform where people lead, agents scale, and nothing holds you back.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1520,7 +1534,7 @@ function GuardrailsSection() {
           transition={{ delay: 0.06, ...SECTION_TRANSITION }}
           className="font-sans font-normal text-4xl md:text-5xl text-[var(--text-primary)] text-center mb-2"
         >
-          You set the guardrails.
+          Scale confidently with guardrails you control.
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: SECTION_INITIAL_Y }}
@@ -2692,8 +2706,7 @@ function Footer() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10 mb-12">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-6 h-6 rounded bg-[var(--primary)]" />
-              <span className="font-normal text-lg text-[var(--text-primary)]">monday</span>
+              <MondayLogo />
             </div>
             <p className="text-sm text-[var(--text-muted)]">The AI-powered work OS</p>
           </div>
